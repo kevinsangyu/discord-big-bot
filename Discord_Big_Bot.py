@@ -479,5 +479,5 @@ async def fact(ctx):
         logger("A morbid fact was printed.")
 
 
-client.run('NzcyNDIxNjE2NzI2NTczMDU2.X56bsA.sblhHkaEaloJtZeQq3AXptPYojQ')
+client.run('the key would go here but I am removing it since the repo is public.')
 
