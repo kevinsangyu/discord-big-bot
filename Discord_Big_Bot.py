@@ -1,7 +1,7 @@
 # Version 1.1
 import discord
 import random
-from datetime import datetime, date
+from datetime import *
 from discord.ext import commands
 client = commands.Bot(command_prefix='Kevin ')
 
@@ -125,12 +125,12 @@ async def paint(ctx, *, memberlist=""):
                 used.append(choice)
             if reset == 0:
                 break
-        logfile = open(today.strftime("%d%m%Y") + '.txt', 'a', encoding='utf-8')
-        logfile.write("\n               ------Results------")
+        logstr = ""
+        logstr += "\n               ------Results------"
         for x in results:
             await ctx.send(x)
-            logfile.write("\n               " + x)
-        logfile.close()
+            logstr += "\n               " + x
+        logger(logstr)
 
 
 @client.command(aliases=['team', 'split', 'Team', 'Teams', 'Split'],
@@ -166,12 +166,12 @@ async def teams(ctx, amount, *, memberlist):
                 i += 1
             if not members:
                 break
-    logfile = open(today.strftime("%d%m%Y") + '.txt', 'a', encoding='utf-8')
-    logfile.write("\n               ------Results------")
+    logstr = ""
+    logstr += "\n               ------Results------"
     for x in range(0, len(result)):
         await ctx.send("Team number " + str(x+1) + ": " + result[x])
-        logfile.write("\n               " + "Team number " + str(x+1) + ": " + result[x])
-    logfile.close()
+        logstr += "\n               " + "Team number " + str(x+1) + ": " + result[x]
+    logger(logstr)
 
 
 @client.command(aliases=['whatis', 'define'], description="Gives description of a given command.")
@@ -294,6 +294,7 @@ async def pythag(ctx, val1, val2):
     result = val1**2 + val2**2
     logger("Pythag answer: " + str(result**0.5))
     await ctx.send(str(result**0.5))
+
 
 @client.command(description="Returns a random fact.")
 async def fact(ctx):
@@ -479,5 +480,38 @@ async def fact(ctx):
         logger("A morbid fact was printed.")
 
 
-client.run('the key would go here but I am removing it since the repo is public.')
+@client.command(description="Holds a poll with reactions")
+async def poll(ctx, *, question):
+    counter = 0
+    prompt = ""
+    options = []
+    option = ""
+    number_emojis = ["1\N{combining enclosing keycap}", "2\N{combining enclosing keycap}",
+                     "3\N{combining enclosing keycap}", "4\N{combining enclosing keycap}",
+                     "5\N{combining enclosing keycap}", "6\N{combining enclosing keycap}",
+                     "7\N{combining enclosing keycap}", "8\N{combining enclosing keycap}",
+                     "9\N{combining enclosing keycap}", "0\N{combining enclosing keycap}"]
+    for i in range(0, len(question)):
+        if counter == 0:
+            if question[i] != ",":
+                prompt += question[i]
+            else:
+                counter += 1
+        elif counter > 0:
+            if question[i] != ",":
+                option += question[i]
+            else:
+                options.append(option)
+                option = ""
+    options.append(option)
+    options_str = ""
+    for i in range(0, len(options)):
+        options[i] = number_emojis[i] + options[i] + "\n"
+        options_str += options[i]
+    msg = await ctx.send(prompt + "\n" + options_str)
+    logger("Poll called with prompt: " + prompt + ", and options: " + str(options))
+    for i in range(0, len(options)):
+        await msg.add_reaction(number_emojis[i])
 
+
+client.run('bot token')
