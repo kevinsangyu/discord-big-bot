@@ -5,6 +5,8 @@ from datetime import *
 import discord
 from discord.ext import commands
 
+import youtube_dl
+
 client = commands.Bot(command_prefix='Kevin ')
 
 
@@ -22,7 +24,7 @@ def logger(message):
 
 @client.event
 async def on_ready():
-    await client.change_presence(activity=discord.Activity(name="'Kevin help' for help.", type=1))
+    await client.change_presence(activity=discord.Activity(name="'Kevin help' for help.", type=3))
     logger("Big Bot is online.")
     print("Big Bot is online.")
 
@@ -36,7 +38,9 @@ async def on_command_error(ctx, error):
     elif isinstance(error, discord.ext.commands.MemberNotFound):
         msg = f"Member {error.argument} does not exist."
     else:
-        msg = "Something went wrong, or invalid input.\nI suggest you do `Kevin help {ctx.command}`"
+        msg = f"Something went wrong, or invalid input.\nI suggest you do `Kevin help {ctx.command}`"
+        print(error)
+        logger("Error: " + str(error))
     await ctx.send(msg)
 
 
@@ -111,7 +115,7 @@ async def dm(ctx, member: discord.Member, *, message):
     logger("Sending message to: " + str(member) + ". The message: " + message)
 
 
-@client.command(aliases=['Paint'],
+@client.command(aliases=['Paint', 'assign'],
                 description="Gives a user another user in the group, with no repeats. "
                             "Separate names with only a single space.")
 async def paint(ctx, *, memberlist=""):
@@ -194,15 +198,63 @@ async def commands(ctx, arg=""):
 
 @client.command(aliases=['connect'], description="The bot joins the voice channel of the sender.")
 async def join(ctx):
+    if ctx.author.voice is None:
+        await ctx.send("You need to be connected to a voice channel.")
+        logger("Connection to voice channel failed.")
     channel = ctx.author.voice.channel
-    await channel.connect()
-    logger("Connected to voice channel.")
+    if ctx.voice_client is None:
+        await channel.connect()
+        logger("Connected to voice channel.")
+    else:
+        await ctx.voice_client.move_to(channel)
+        logger("Connected to voice channel.")
 
 
 @client.command(aliases=['disconnect', 'quit'], description="The bot leaves the voice channel.")
 async def leave(ctx):
     await ctx.voice_client.disconnect()
     logger("Left voice channel.")
+
+
+@client.command(description="Play a video's audio from provided youtube link.")
+async def play(ctx, url):
+    if ctx.voice_client is None:
+        await ctx.send("I must be connected to a voice channel first.")
+    else:
+        ctx.voice_client.stop()
+        FFMPEG_OPTIONS = {'before_options': ' -reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5', 'options': '-vn'}
+        YDL_OPTIONS = {'format': 'bestaudio'}
+        vc = ctx.voice_client
+
+        with youtube_dl.YoutubeDL(YDL_OPTIONS) as ydl:
+            info = ydl.extract_info(url, download=False)
+            url2 = info['formats'][0]['url']
+            source = await discord.FFmpegOpusAudio.from_probe(url2, **FFMPEG_OPTIONS)
+            vc.play(source)
+
+
+@client.command(aliases=['p'], description="Pause the playing audio")
+async def pause(ctx):
+    if ctx.voice_client is None:
+        await ctx.send("I must be connected to a voice channel first.")
+    else:
+        ctx.voice_client.pause()
+
+
+@client.command(aliase=['r'], description="Resumes the playing audio")
+async def resume(ctx):
+    if ctx.voice_client is None:
+        await ctx.send("I must be connected to a voice channel first.")
+    else:
+        ctx.voice_client.resume()
+
+
+@client.command(aliase=['s'], description="Stops the playing audio")
+async def stop(ctx):
+    if ctx.voice_client is None:
+        await ctx.send("I must be connected to a voice channel first.")
+    else:
+        ctx.voice_client.stop()
 
 
 @client.command(aliases=['randomint', 'randint'], description="Chooses a random number between 1 and a given number.")
