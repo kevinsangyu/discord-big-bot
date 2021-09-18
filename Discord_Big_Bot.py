@@ -6,6 +6,7 @@ import discord
 from discord.ext import commands
 
 import youtube_dl
+import requests
 
 client = commands.Bot(command_prefix='Kevin ')
 
@@ -217,20 +218,33 @@ async def leave(ctx):
 
 
 @client.command(description="Play a video's audio from provided youtube link.")
-async def play(ctx, url):
+async def play(ctx, *url):
+    url = "".join(url)
     if ctx.voice_client is None:
         await ctx.send("I must be connected to a voice channel first.")
     else:
+        if url[0:31] != "https://www.youtube.com/watch?v=":
+            url = "https://www.youtube.com/results?search_query=" + url
+            page = requests.get(url)
+            content = str(page.content.decode('utf-8'))
+            index = content.find('/watch?v=')
+            counter = 5
+            while True:
+                if content[index + counter] == '"':
+                    break
+                else:
+                    counter += 1
+            url = "https://www.youtube.com" + content[index:index + counter]
         ctx.voice_client.stop()
         FFMPEG_OPTIONS = {'before_options': ' -reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5', 'options': '-vn'}
         YDL_OPTIONS = {'format': 'bestaudio'}
         vc = ctx.voice_client
-
         with youtube_dl.YoutubeDL(YDL_OPTIONS) as ydl:
             info = ydl.extract_info(url, download=False)
             url2 = info['formats'][0]['url']
-            source = await discord.FFmpegOpusAudio.from_probe(url2, **FFMPEG_OPTIONS)
+            source = await discord.FFmpegOpusAudio.from_probe(url2, **FFMPEG_OPTIONS, executable=r"D:\Program Files\ffmpeg-2021-09-16-git-8f92a1862a-essentials_build\bin/ffmpeg.exe")
             vc.play(source)
+            logger("Playing: " + url)
 
 
 @client.command(aliases=['p'], description="Pause the playing audio")
