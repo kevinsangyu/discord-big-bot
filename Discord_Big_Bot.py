@@ -219,12 +219,12 @@ async def leave(ctx):
 
 @client.command(description="Play a video's audio from provided youtube link.")
 async def play(ctx, *url):
-    url = "".join(url)
+    url = " ".join(url)
     if ctx.voice_client is None:
         await ctx.send("I must be connected to a voice channel first.")
     else:
         if url[0:31] != "https://www.youtube.com/watch?v=":
-            url = "https://www.youtube.com/results?search_query=" + url
+            url = f"https://www.youtube.com/results?search_query={url}"
             page = requests.get(url)
             content = str(page.content.decode('utf-8'))
             index = content.find('/watch?v=')
@@ -242,7 +242,7 @@ async def play(ctx, *url):
         with youtube_dl.YoutubeDL(YDL_OPTIONS) as ydl:
             info = ydl.extract_info(url, download=False)
             url2 = info['formats'][0]['url']
-            source = await discord.FFmpegOpusAudio.from_probe(url2, **FFMPEG_OPTIONS, executable=r"D:\Program Files\ffmpeg-2021-09-16-git-8f92a1862a-essentials_build\bin/ffmpeg.exe")
+            source = await discord.FFmpegOpusAudio.from_probe(url2, **FFMPEG_OPTIONS)
             vc.play(source)
             logger("Playing: " + url)
 
