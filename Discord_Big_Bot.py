@@ -1,14 +1,11 @@
-# Version 1.1 I forgot to update version number everytime
 import random
 from datetime import *
-
 import discord
 from discord.ext import commands
-
-import youtube_dl
-import requests
+import musicCog
 
 client = commands.Bot(command_prefix='Kevin ')
+musicCog.setup(client)
 
 
 def time():
@@ -186,89 +183,6 @@ async def commands(ctx, arg=""):
     else:
         await ctx.send_help(arg)
         logger("Specific command was printed: " + arg)
-
-
-# client.remove_command('help')
-
-
-# @client.command(aliases=['Help', 'helpme', 'Helpme'], description="Refuses help.")
-# async def help(ctx):
-#     await ctx.send("No.")
-#     logger("Someone asked for help.")
-
-
-@client.command(aliases=['connect'], description="The bot joins the voice channel of the sender.")
-async def join(ctx):
-    if ctx.author.voice is None:
-        await ctx.send("You need to be connected to a voice channel.")
-        logger("Connection to voice channel failed.")
-    channel = ctx.author.voice.channel
-    if ctx.voice_client is None:
-        await channel.connect()
-        logger("Connected to voice channel.")
-    else:
-        await ctx.voice_client.move_to(channel)
-        logger("Connected to voice channel.")
-
-
-@client.command(aliases=['disconnect', 'quit'], description="The bot leaves the voice channel.")
-async def leave(ctx):
-    await ctx.voice_client.disconnect()
-    logger("Left voice channel.")
-
-
-@client.command(description="Play a video's audio from provided youtube link.")
-async def play(ctx, *url):
-    url = " ".join(url)
-    if ctx.voice_client is None:
-        await ctx.send("I must be connected to a voice channel first.")
-    else:
-        if url[0:31] != "https://www.youtube.com/watch?v=":
-            url = f"https://www.youtube.com/results?search_query={url}"
-            page = requests.get(url)
-            content = str(page.content.decode('utf-8'))
-            index = content.find('/watch?v=')
-            counter = 5
-            while True:
-                if content[index + counter] == '"':
-                    break
-                else:
-                    counter += 1
-            url = "https://www.youtube.com" + content[index:index + counter]
-        ctx.voice_client.stop()
-        FFMPEG_OPTIONS = {'before_options': ' -reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5', 'options': '-vn'}
-        YDL_OPTIONS = {'format': 'bestaudio'}
-        vc = ctx.voice_client
-        with youtube_dl.YoutubeDL(YDL_OPTIONS) as ydl:
-            info = ydl.extract_info(url, download=False)
-            url2 = info['formats'][0]['url']
-            source = await discord.FFmpegOpusAudio.from_probe(url2, **FFMPEG_OPTIONS)
-            vc.play(source)
-            logger("Playing: " + url)
-
-
-@client.command(aliases=['p'], description="Pause the playing audio")
-async def pause(ctx):
-    if ctx.voice_client is None:
-        await ctx.send("I must be connected to a voice channel first.")
-    else:
-        ctx.voice_client.pause()
-
-
-@client.command(aliase=['r'], description="Resumes the playing audio")
-async def resume(ctx):
-    if ctx.voice_client is None:
-        await ctx.send("I must be connected to a voice channel first.")
-    else:
-        ctx.voice_client.resume()
-
-
-@client.command(aliase=['s'], description="Stops the playing audio")
-async def stop(ctx):
-    if ctx.voice_client is None:
-        await ctx.send("I must be connected to a voice channel first.")
-    else:
-        ctx.voice_client.stop()
 
 
 @client.command(aliases=['randomint', 'randint'], description="Chooses a random number between 1 and a given number.")
@@ -519,8 +433,8 @@ async def fact(ctx):
         "Don't be ashamed of who you are. \nThat's your parents job",
         "Take a piece of paper, fold it in half eight times, soak it in olive oil, and shove it up your ass."
     ]
-    number = random.randint(1, 100)
-    if number > 3:
+    i = random.randint(1, 100)
+    if i > 3:
         await ctx.send("Did you know: " + random.choice(facts))
         logger("A real fact was printed.")
     else:
