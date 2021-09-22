@@ -2,6 +2,7 @@ import random
 from datetime import *
 import discord
 from discord.ext import commands
+from discord import errors
 import musicCog
 
 client = commands.Bot(command_prefix='Kevin ')
@@ -35,6 +36,8 @@ async def on_command_error(ctx, error):
         msg = f"No such command\nI suggest you do `Kevin help`"
     elif isinstance(error, discord.ext.commands.MemberNotFound):
         msg = f"Member {error.argument} does not exist."
+    elif isinstance(error, discord.ext.commands.CommandOnCooldown):
+        msg = "Command is on cooldown, give it {:.1f} seconds.".format(error.retry_after)
     else:
         msg = f"Something went wrong, or invalid input.\nI suggest you do `Kevin help {ctx.command}`"
         print(error)

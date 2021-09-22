@@ -4,6 +4,7 @@ from discord.ext import tasks
 import youtube_dl
 from datetime import *
 import requests
+from bs4 import BeautifulSoup as bs
 
 
 def time():
@@ -16,6 +17,12 @@ def logger(message):
     logfile = open(today.strftime("%d%m%Y") + ".txt", 'a', encoding='utf-8')
     logfile.write("\n" + time() + message)
     logfile.close()
+
+
+class Song(object):
+    def __init__(self, name, url):
+        self.name = name
+        self.url = url
 
 
 class MusicCog(commands.Cog):
@@ -63,6 +70,7 @@ class MusicCog(commands.Cog):
             ctx.voice_client.resume()
 
     @commands.command(description="Play a video's audio from provided youtube link.")
+    @commands.cooldown(1, 3)
     async def play(self, ctx, *url):
         if ctx.guild.id not in self.music_queue:
             self.music_queue[ctx.guild.id] = []
@@ -82,31 +90,37 @@ class MusicCog(commands.Cog):
                     else:
                         counter += 1
                 url = "https://www.youtube.com" + content[index:index + counter]
+            page = requests.get(url)
+            soup = bs(page.content, "html.parser")
+            name = soup.find("meta", itemprop="name")["content"]
+            song = Song(name, url)
             if ctx.voice_client.is_playing() or ctx.voice_client.is_paused():
-                self.music_queue[ctx.guild.id].append(url)
+                self.music_queue[ctx.guild.id].append(song)
                 await ctx.send(
                     f"Queued as number {str(len(self.music_queue[ctx.guild.id]))} in queue.\nType `Kevin queue` to"
                     f" see your queue.")
-                logger("Added to queue: " + url)
+                logger("Added to queue: " + song.name)
             else:
                 vc = ctx.voice_client
                 with youtube_dl.YoutubeDL(self.YDL_OPTIONS) as ydl:
-                    info = ydl.extract_info(url, download=False)
+                    info = ydl.extract_info(song.url, download=False)
                     url2 = info['formats'][0]['url']
                     source = await discord.FFmpegOpusAudio.from_probe(url2, **self.FFMPEG_OPTIONS)
+                                                                      # executable=r"D:\Program Files\ffmpeg-2021-09-16-git-8f92a1862a-essentials_build\bin\ffmpeg.exe")
                     vc.play(source)
-                    logger("Playing: " + url)
+                    logger("Playing: " + song.name)
 
     @tasks.loop(seconds=3.0)
     async def check(self):
         for vc in self.client.voice_clients:
             if vc.is_playing() is False:
                 if vc.guild.id in self.music_queue and self.music_queue[vc.guild.id] != []:
-                    url = self.music_queue[vc.guild.id].pop(0)
+                    url = self.music_queue[vc.guild.id].pop(0).url
                     with youtube_dl.YoutubeDL(self.YDL_OPTIONS) as ydl:
                         info = ydl.extract_info(url, download=False)
                         url2 = info['formats'][0]['url']
                         source = await discord.FFmpegOpusAudio.from_probe(url2, **self.FFMPEG_OPTIONS)
+                                                                          # executable=r"D:\Program Files\ffmpeg-2021-09-16-git-8f92a1862a-essentials_build\bin\ffmpeg.exe")
                         vc.play(source)
                         logger("Playing: " + url)
 
@@ -129,10 +143,20 @@ class MusicCog(commands.Cog):
         else:
             msg = ""
             for i in range(0, len(self.music_queue[ctx.guild.id])):
-                msg += str(i + 1) + ": " + self.music_queue[ctx.guild.id][i] + "\n"
-            msg += "In the future, this list will be upgraded for readability."
+                msg += str(i + 1) + ": " + self.music_queue[ctx.guild.id][i].name + "\n"
         await ctx.send(msg)
         logger("Queue was printed as: \n" + msg)
+
+    @commands.command(description="Removes a song from the music queue.")
+    async def remove(self, ctx, index):
+        index = int(index)
+        if ctx.guild.id not in self.music_queue or self.music_queue[ctx.guild.id] == [] or len(self.music_queue[ctx.guild.id]) > index:
+            msg = "There is nothing in your music queue."
+        else:
+            song = self.music_queue[ctx.guild.id].pop(index - 1)
+            msg = "Removed song number " + str(index) + ": " + song.name + " from the queue."
+        await ctx.send(msg)
+        logger(msg)
 
     @commands.command(description="Stops the playing audio and clears the queue.")
     async def stop(self, ctx):
