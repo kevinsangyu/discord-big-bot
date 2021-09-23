@@ -1,10 +1,9 @@
+import random
 import discord
 from discord.ext import commands
 from discord.ext import tasks
 import youtube_dl
 from datetime import *
-import requests
-from lxml import html
 from googleapiclient.discovery import build
 
 
@@ -34,7 +33,7 @@ class MusicCog(commands.Cog):
         self.FFMPEG_OPTIONS = {'before_options': ' -reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5',
                                'options': '-vn'}
         self.YDL_OPTIONS = {'format': 'bestaudio'}
-        self.youtube = build('youtube', 'v3', developerKey="devkey")
+        self.youtube = build('youtube', 'v3', developerKey="key")
 
     def cog_unload(self):
         self.check.cancel()
@@ -43,13 +42,12 @@ class MusicCog(commands.Cog):
     async def join(self, ctx):
         if ctx.author.voice is None:
             await ctx.send("You need to be connected to a voice channel.")
-            logger("Connection to voice channel failed.")
-        channel = ctx.author.voice.channel
-        if ctx.voice_client is None:
-            await channel.connect()
-            logger("Connected to voice channel.")
         else:
-            await ctx.voice_client.move_to(channel)
+            channel = ctx.author.voice.channel
+            if ctx.voice_client is None:
+                await channel.connect()
+            else:
+                await ctx.voice_client.move_to(channel)
             logger("Connected to voice channel.")
 
     @commands.command(aliases=['disconnect', 'quit'], description="The bot leaves the voice channel.")
@@ -85,20 +83,19 @@ class MusicCog(commands.Cog):
             await ctx.send("I must be connected to a voice channel first.")
         else:
             if url[0:31] != "https://www.youtube.com/watch?v=":
-                url = "https://www.youtube.com/results?search_query=" + url
-                page = requests.get(url)
-                content = str(page.content.decode('utf-8'))
-                index = content.find('/watch?v=')
-                counter = 5
-                while True:
-                    if content[index + counter] == '"':
-                        break
-                    else:
-                        counter += 1
-                url = "https://www.youtube.com" + content[index:index + counter]
-            page = requests.get(url)
-            tree = html.fromstring(page.text)
-            name = tree.xpath('//meta[@itemprop="name"]/@content')[0]
+                request = self.youtube.search().list(
+                    part="id",
+                    maxResults=1,
+                    q=url
+                )
+                response = request.execute()
+                url = "https://www.youtube.com/watch?v=" + response['items'][0]['id']['videoId']
+            request = self.youtube.videos().list(
+                part='snippet',
+                id=url[32:]
+            )
+            response = request.execute()
+            name = response['items'][0]['snippet']['title']
             song = Song(name, url)
             if ctx.voice_client.is_playing() or ctx.voice_client.is_paused():
                 self.music_queue[ctx.guild.id].append(song)
@@ -117,7 +114,7 @@ class MusicCog(commands.Cog):
                     vc.play(source)
                     logger("Playing: " + song.name)
 
-    @tasks.loop(seconds=3.0)
+    @tasks.loop(seconds=5.0)
     async def check(self):
         for vc in self.client.voice_clients:
             if vc.is_playing() is False:
@@ -133,17 +130,38 @@ class MusicCog(commands.Cog):
 
     @commands.command(aliases=['s'], description="Skips to the next song in the queue.")
     async def skip(self, ctx):
+        vc = ctx.voice_client
+        if vc is None:
+            await ctx.send("I must be connected to a voice channel first.")
+        else:
+            vc.stop()
+            if ctx.guild.id in self.music_queue and self.music_queue[ctx.guild.id]:
+                song = self.music_queue[ctx.guild.id].pop(0)
+                with youtube_dl.YoutubeDL(self.YDL_OPTIONS) as ydl:
+                    info = ydl.extract_info(song.url, download=False)
+                    url2 = info['formats'][0]['url']
+                    source = await discord.FFmpegOpusAudio.from_probe(url2, **self.FFMPEG_OPTIONS)
+                                                                      #executable=r"D:\Program Files\ffmpeg-2021-09-16-git-8f92a1862a-essentials_build\bin\ffmpeg.exe")
+                    vc.play(source)
+                    await ctx.send(f"Now playing {song.name}.")
+                    logger("Playing: " + song.name)
+
+    @commands.command(aliases=['st'], description="Skips to the specified song in the queue. Removes all songs before"
+                                                  " said song form the queue.")
+    async def skipto(self, ctx, index):  # kind of broken right now, since the skipping takes a while and the check loop kicks in before it starts playing.
         if ctx.voice_client is None:
             await ctx.send("I must be connected to a voice channel first.")
         else:
-            if ctx.guild.id not in self.music_queue or self.music_queue[ctx.guild.id] == []:
-                ctx.voice_client.stop()
+            index = int(index)
+            if index > len(self.music_queue[ctx.guild.id]) or index <= 0:
+                await ctx.send("Invalid index.")
+                return
             else:
-                url = self.music_queue[ctx.guild.id].pop(0).url
-                ctx.voice_client.stop()
-                await self.play(ctx, url)
+                self.music_queue[ctx.guild.id] = self.music_queue[ctx.guild.id][index-1:]
+                await self.skip(ctx)
 
     @commands.command(description="Adds all videos in a youtube playlist to the queue.")
+    @commands.cooldown(1, 10)
     async def playlist(self, ctx, url):
         if ctx.voice_client is None:
             await ctx.send("I must be connected to a voice channel first.")
@@ -183,16 +201,62 @@ class MusicCog(commands.Cog):
         await ctx.send(msg)
         logger("Queue was printed as: \n" + msg)
 
-    @commands.command(description="Removes a song from the music queue.")
-    async def remove(self, ctx, index):
-        index = int(index)
-        if ctx.guild.id not in self.music_queue or self.music_queue[ctx.guild.id] == [] or len(self.music_queue[ctx.guild.id]) > index:
-            msg = "There is nothing in your music queue."
+    @commands.command(description="Removes a song or songs from the music queue. If removing multiple, separate the "
+                                  "two numbers with a space or comma.")
+    async def remove(self, ctx, *index):
+        index = " ".join(index)
+        try:
+            index = int(index)
+        except ValueError:
+            digits = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
+            start = -1
+            end = -1
+            for i in range(0, len(index)):
+                if index[i] not in digits and start == -1:
+                    start = i
+                if index[i] in digits and start != -1:
+                    end = i
+            numbers = index[start:end]
+            numbers = index.split(numbers)
+            index = []
+            for number in numbers:
+                index.append(int(number))
+        testlist = []
+        testint = 0
+        if type(index) == type(testlist):
+            if len(index) > 2:
+                await ctx.send("Invalid input. I suggest you do `Kevin help remove`.")
+                return
+            else:
+                start = index[0]
+                end = index[1]
+                for i in range(0, end-start+1):
+                    await self.remove(ctx, str(end - i))
+        elif type(index) == type(testint):
+            if ctx.guild.id not in self.music_queue or self.music_queue[ctx.guild.id] == []:
+                msg = "There is nothing in your music queue."
+            elif len(self.music_queue[ctx.guild.id]) < index:
+                msg = "Invalid index. I suggest you do `Kevin help remove`."
+            else:
+                song = self.music_queue[ctx.guild.id].pop(index - 1)
+                msg = "Removed song number " + str(index) + ": " + song.name + " from the queue."
+            await ctx.send(msg)
+            logger(msg)
+
+    @commands.command(description="Shuffles the queue.")
+    async def shuffle(self, ctx):
+        if ctx.guild.id not in self.music_queue or not self.music_queue[ctx.guild.id]:
+            await ctx.send("There is nothing in your music queue.")
         else:
-            song = self.music_queue[ctx.guild.id].pop(index - 1)
-            msg = "Removed song number " + str(index) + ": " + song.name + " from the queue."
-        await ctx.send(msg)
-        logger(msg)
+            copy_list = []
+            for song in self.music_queue[ctx.guild.id]:
+                copy_list.append(song)
+            self.music_queue[ctx.guild.id] = []
+            for i in range(0, len(copy_list)):
+                song = copy_list.pop(random.randint(0, len(copy_list)-1))
+                self.music_queue[ctx.guild.id].append(song)
+            await ctx.send("Queue has been shuffled.")
+            logger("Queue shuffled.")
 
     @commands.command(description="Stops the playing audio and clears the queue.")
     async def stop(self, ctx):
