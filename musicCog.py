@@ -5,6 +5,7 @@ import youtube_dl
 from datetime import *
 import requests
 from lxml import html
+from googleapiclient.discovery import build
 
 
 def time():
@@ -33,6 +34,7 @@ class MusicCog(commands.Cog):
         self.FFMPEG_OPTIONS = {'before_options': ' -reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5',
                                'options': '-vn'}
         self.YDL_OPTIONS = {'format': 'bestaudio'}
+        self.youtube = build('youtube', 'v3', developerKey="developerkey.")
 
     def cog_unload(self):
         self.check.cancel()
@@ -106,8 +108,8 @@ class MusicCog(commands.Cog):
                 with youtube_dl.YoutubeDL(self.YDL_OPTIONS) as ydl:
                     info = ydl.extract_info(url, download=False)
                     url2 = info['formats'][0]['url']
-                    source = await discord.FFmpegOpusAudio.from_probe(url2, **self.FFMPEG_OPTIONS)
-                                                                      #executable=r"D:\Program Files\ffmpeg-2021-09-16-git-8f92a1862a-essentials_build\bin\ffmpeg.exe")
+                    source = await discord.FFmpegOpusAudio.from_probe(url2, **self.FFMPEG_OPTIONS,
+                                                                      executable=r"D:\Program Files\ffmpeg-2021-09-16-git-8f92a1862a-essentials_build\bin\ffmpeg.exe")
                     await ctx.send(f"Now playing {song.name}.")
                     vc.play(source)
                     logger("Playing: " + song.name)
@@ -121,8 +123,8 @@ class MusicCog(commands.Cog):
                     with youtube_dl.YoutubeDL(self.YDL_OPTIONS) as ydl:
                         info = ydl.extract_info(url, download=False)
                         url2 = info['formats'][0]['url']
-                        source = await discord.FFmpegOpusAudio.from_probe(url2, **self.FFMPEG_OPTIONS)
-                                                                          #executable=r"D:\Program Files\ffmpeg-2021-09-16-git-8f92a1862a-essentials_build\bin\ffmpeg.exe")
+                        source = await discord.FFmpegOpusAudio.from_probe(url2, **self.FFMPEG_OPTIONS,
+                                                                          executable=r"D:\Program Files\ffmpeg-2021-09-16-git-8f92a1862a-essentials_build\bin\ffmpeg.exe")
                         vc.play(source)
                         logger("Playing: " + url)
 
@@ -137,6 +139,35 @@ class MusicCog(commands.Cog):
                 url = self.music_queue[ctx.guild.id].pop(0).url
                 ctx.voice_client.stop()
                 await self.play(ctx, url)
+
+    @commands.command(description="Adds all videos in a youtube playlist to the queue.")
+    async def playlist(self, ctx, url):
+        if ctx.voice_client is None:
+            await ctx.send("I must be connected to a voice channel first.")
+        else:
+            if url[0:38] == "https://www.youtube.com/playlist?list=":
+                playlist_id = url[38:]
+            else:
+                await ctx.send("Invalid link. I suggest you do `Kevin help playlist`.")
+                return
+            request = self.youtube.playlistItems().list(
+                part="snippet,contentDetails",
+                maxResults=100,
+                playlistId=playlist_id
+            )
+            response = request.execute()
+            if ctx.guild.id not in self.music_queue:
+                self.music_queue[ctx.guild.id] = []
+            queue_list = [] # this is a workaround for the looped check() function to not trigger the bot to play when this function will try to play anyway.
+            for item in response["items"]:
+                song = Song(item['snippet']['title'], "https://www.youtube.com/watch?v=" + item["contentDetails"]["videoId"])
+                queue_list.append(song)
+            if ctx.voice_client.is_playing() is False:
+                url = queue_list.pop(0).url
+                await self.play(ctx, url)
+            while queue_list:
+                self.music_queue[ctx.guild.id].append(queue_list.pop(0))
+            await ctx.send("Added " + str(len(response["items"])) + " songs to the queue.")
 
     @commands.command(aliases=['q'], description="Displays the current music queue.")
     async def queue(self, ctx):
