@@ -34,7 +34,7 @@ class MusicCog(commands.Cog):
         self.FFMPEG_OPTIONS = {'before_options': ' -reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5',
                                'options': '-vn'}
         self.YDL_OPTIONS = {'format': 'bestaudio'}
-        self.youtube = build('youtube', 'v3', developerKey="developerkey.")
+        self.youtube = build('youtube', 'v3', developerKey="devkey")
 
     def cog_unload(self):
         self.check.cancel()
@@ -75,9 +75,12 @@ class MusicCog(commands.Cog):
                                   "it will be queued.")
     @commands.cooldown(1, 3)
     async def play(self, ctx, *url):
+        url = " ".join(url)
+        if url[0:38] == "https://www.youtube.com/playlist?list=":
+            await self.playlist(ctx, url)
+            return
         if ctx.guild.id not in self.music_queue:
             self.music_queue[ctx.guild.id] = []
-        url = " ".join(url)
         if ctx.voice_client is None:
             await ctx.send("I must be connected to a voice channel first.")
         else:
@@ -108,8 +111,8 @@ class MusicCog(commands.Cog):
                 with youtube_dl.YoutubeDL(self.YDL_OPTIONS) as ydl:
                     info = ydl.extract_info(url, download=False)
                     url2 = info['formats'][0]['url']
-                    source = await discord.FFmpegOpusAudio.from_probe(url2, **self.FFMPEG_OPTIONS,
-                                                                      executable=r"D:\Program Files\ffmpeg-2021-09-16-git-8f92a1862a-essentials_build\bin\ffmpeg.exe")
+                    source = await discord.FFmpegOpusAudio.from_probe(url2, **self.FFMPEG_OPTIONS)
+                                                                      #executable=r"D:\Program Files\ffmpeg-2021-09-16-git-8f92a1862a-essentials_build\bin\ffmpeg.exe")
                     await ctx.send(f"Now playing {song.name}.")
                     vc.play(source)
                     logger("Playing: " + song.name)
@@ -123,8 +126,8 @@ class MusicCog(commands.Cog):
                     with youtube_dl.YoutubeDL(self.YDL_OPTIONS) as ydl:
                         info = ydl.extract_info(url, download=False)
                         url2 = info['formats'][0]['url']
-                        source = await discord.FFmpegOpusAudio.from_probe(url2, **self.FFMPEG_OPTIONS,
-                                                                          executable=r"D:\Program Files\ffmpeg-2021-09-16-git-8f92a1862a-essentials_build\bin\ffmpeg.exe")
+                        source = await discord.FFmpegOpusAudio.from_probe(url2, **self.FFMPEG_OPTIONS)
+                                                                          #executable=r"D:\Program Files\ffmpeg-2021-09-16-git-8f92a1862a-essentials_build\bin\ffmpeg.exe")
                         vc.play(source)
                         logger("Playing: " + url)
 
