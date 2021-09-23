@@ -4,7 +4,7 @@ from discord.ext import tasks
 import youtube_dl
 from datetime import *
 import requests
-from bs4 import BeautifulSoup as bs
+from lxml import html
 
 
 def time():
@@ -69,7 +69,8 @@ class MusicCog(commands.Cog):
         else:
             ctx.voice_client.resume()
 
-    @commands.command(description="Play a video's audio from provided youtube link.")
+    @commands.command(description="Play a video's audio from provided youtube link. If something is already playing,"
+                                  "it will be queued.")
     @commands.cooldown(1, 3)
     async def play(self, ctx, *url):
         if ctx.guild.id not in self.music_queue:
@@ -91,8 +92,8 @@ class MusicCog(commands.Cog):
                         counter += 1
                 url = "https://www.youtube.com" + content[index:index + counter]
             page = requests.get(url)
-            soup = bs(page.content, "html.parser")
-            name = soup.find("meta", itemprop="name")["content"]
+            tree = html.fromstring(page.text)
+            name = tree.xpath('//meta[@itemprop="name"]/@content')[0]
             song = Song(name, url)
             if ctx.voice_client.is_playing() or ctx.voice_client.is_paused():
                 self.music_queue[ctx.guild.id].append(song)
@@ -103,10 +104,11 @@ class MusicCog(commands.Cog):
             else:
                 vc = ctx.voice_client
                 with youtube_dl.YoutubeDL(self.YDL_OPTIONS) as ydl:
-                    info = ydl.extract_info(song.url, download=False)
+                    info = ydl.extract_info(url, download=False)
                     url2 = info['formats'][0]['url']
                     source = await discord.FFmpegOpusAudio.from_probe(url2, **self.FFMPEG_OPTIONS)
-                                                                      # executable=r"D:\Program Files\ffmpeg-2021-09-16-git-8f92a1862a-essentials_build\bin\ffmpeg.exe")
+                                                                      #executable=r"D:\Program Files\ffmpeg-2021-09-16-git-8f92a1862a-essentials_build\bin\ffmpeg.exe")
+                    await ctx.send(f"Now playing {song.name}.")
                     vc.play(source)
                     logger("Playing: " + song.name)
 
@@ -120,7 +122,7 @@ class MusicCog(commands.Cog):
                         info = ydl.extract_info(url, download=False)
                         url2 = info['formats'][0]['url']
                         source = await discord.FFmpegOpusAudio.from_probe(url2, **self.FFMPEG_OPTIONS)
-                                                                          # executable=r"D:\Program Files\ffmpeg-2021-09-16-git-8f92a1862a-essentials_build\bin\ffmpeg.exe")
+                                                                          #executable=r"D:\Program Files\ffmpeg-2021-09-16-git-8f92a1862a-essentials_build\bin\ffmpeg.exe")
                         vc.play(source)
                         logger("Playing: " + url)
 
@@ -132,7 +134,7 @@ class MusicCog(commands.Cog):
             if ctx.guild.id not in self.music_queue or self.music_queue[ctx.guild.id] == []:
                 ctx.voice_client.stop()
             else:
-                url = self.music_queue[ctx.guild.id].pop(0)
+                url = self.music_queue[ctx.guild.id].pop(0).url
                 ctx.voice_client.stop()
                 await self.play(ctx, url)
 
