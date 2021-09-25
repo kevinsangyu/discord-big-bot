@@ -40,7 +40,19 @@ class WikiCog(commands.Cog):
         await ctx.send(summary)
         logger("Wiki summary of: " + keywords)
 
-    # eventually want to add a random page getter, as well as a random page to random page 'game' thing.
+    @commands.command(description="Prints the title of random wikipedia articles. Maximum of 10.")
+    async def wikirand(self, ctx, amount):
+        if amount <= 0:
+            amount = 1
+        elif amount > 10:
+            amount = 10
+        msg = ""
+        async with ctx.typing():
+            results = wikipedia.random()
+            for result in results:
+                msg += result + "\n"
+        await ctx.send(msg)
+        logger("Random wiki pages: \n" + msg)
 
 
 def setup(client):
