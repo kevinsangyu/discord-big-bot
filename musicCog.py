@@ -50,7 +50,7 @@ class MusicCog(commands.Cog):
                 await ctx.voice_client.move_to(channel)
             logger("Connected to voice channel.")
 
-    @commands.command(aliases=['disconnect', 'quit'], description="The bot leaves the voice channel.")
+    @commands.command(aliases=['disconnect', 'quit', 'fuckoff', 'fuck off'], description="The bot leaves the voice channel.")
     async def leave(self, ctx):
         await ctx.voice_client.disconnect()
         logger("Left voice channel.")
@@ -97,36 +97,37 @@ class MusicCog(commands.Cog):
             response = request.execute()
             name = response['items'][0]['snippet']['title']
             song = Song(name, url)
-            if ctx.voice_client.is_playing() or ctx.voice_client.is_paused():
-                self.music_queue[ctx.guild.id].append(song)
-                await ctx.send(
-                    f"Queued as number {str(len(self.music_queue[ctx.guild.id]))} in queue.\nType `Kevin queue` to"
-                    f" see your queue.")
-                logger("Added to queue: " + song.name)
-            else:
-                vc = ctx.voice_client
-                with youtube_dl.YoutubeDL(self.YDL_OPTIONS) as ydl:
-                    info = ydl.extract_info(url, download=False)
-                    url2 = info['formats'][0]['url']
-                    source = await discord.FFmpegOpusAudio.from_probe(url2, **self.FFMPEG_OPTIONS)
-                                                                      #executable=r"D:\Program Files\ffmpeg-2021-09-16-git-8f92a1862a-essentials_build\bin\ffmpeg.exe")
-                    await ctx.send(f"Now playing {song.name}.")
-                    vc.play(source)
-                    logger("Playing: " + song.name)
+            async with ctx.typing():
+                if ctx.voice_client.is_playing() or ctx.voice_client.is_paused():
+                    self.music_queue[ctx.guild.id].append(song)
+                    await ctx.send(
+                        f"Queued as number {str(len(self.music_queue[ctx.guild.id]))} in queue.\nType `Kevin queue` to"
+                        f" see your queue.")
+                    logger("Added to queue: " + song.name)
+                else:
+                    vc = ctx.voice_client
+                    with youtube_dl.YoutubeDL(self.YDL_OPTIONS) as ydl:
+                        info = ydl.extract_info(url, download=False)
+                        url2 = info['formats'][0]['url']
+                        source = await discord.FFmpegOpusAudio.from_probe(url2, **self.FFMPEG_OPTIONS)
+                                                                          #executable=r"D:\Program Files\ffmpeg-2021-09-16-git-8f92a1862a-essentials_build\bin\ffmpeg.exe")
+                        await ctx.send(f"Now playing {song.name}.")
+                        vc.play(source)
+                        logger("Playing: " + song.name)
 
     @tasks.loop(seconds=5.0)
     async def check(self):
         for vc in self.client.voice_clients:
             if vc.is_playing() is False:
                 if vc.guild.id in self.music_queue and self.music_queue[vc.guild.id] != []:
-                    url = self.music_queue[vc.guild.id].pop(0).url
+                    song = self.music_queue[vc.guild.id].pop(0)
                     with youtube_dl.YoutubeDL(self.YDL_OPTIONS) as ydl:
-                        info = ydl.extract_info(url, download=False)
+                        info = ydl.extract_info(song.url, download=False)
                         url2 = info['formats'][0]['url']
                         source = await discord.FFmpegOpusAudio.from_probe(url2, **self.FFMPEG_OPTIONS)
                                                                           #executable=r"D:\Program Files\ffmpeg-2021-09-16-git-8f92a1862a-essentials_build\bin\ffmpeg.exe")
                         vc.play(source)
-                        logger("Playing: " + url)
+                        logger("Playing: " + song.name)
 
     @commands.command(aliases=['s'], description="Skips to the next song in the queue.")
     async def skip(self, ctx):

@@ -4,9 +4,11 @@ import discord
 from discord.ext import commands
 from discord import errors
 import musicCog
+import wikiCog
 
 client = commands.Bot(command_prefix='Kevin ')
 musicCog.setup(client)
+wikiCog.setup(client)
 
 
 def time():
@@ -39,7 +41,7 @@ async def on_command_error(ctx, error):
     elif isinstance(error, discord.ext.commands.CommandOnCooldown):
         msg = "Command is on cooldown, give it {:.1f} seconds.".format(error.retry_after)
     else:
-        msg = f"Something went wrong, or invalid input.\nI suggest you do `Kevin help {ctx.command}`"
+        msg = f"Something went wrong, or invalid input.\nI suggest you do `Kevin help {ctx.command}`\n{error}"
         print(error)
         logger("Error: " + str(error))
     await ctx.send(msg)
