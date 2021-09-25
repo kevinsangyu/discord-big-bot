@@ -48,9 +48,12 @@ class WikiCog(commands.Cog):
             amount = 10
         msg = ""
         async with ctx.typing():
-            results = wikipedia.random()
-            for result in results:
-                msg += result + "\n"
+            results = wikipedia.random(amount)
+            if len(results) > 1:
+                for result in results:
+                    msg += result + "\n"
+            else:
+                msg += results
         await ctx.send(msg)
         logger("Random wiki pages: \n" + msg)
 
