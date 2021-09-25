@@ -5,6 +5,10 @@ from discord.ext import commands
 from discord import errors
 import musicCog
 import wikiCog
+import os
+
+os.mkdir("logs")
+os.chdir("logs")
 
 client = commands.Bot(command_prefix='Kevin ')
 musicCog.setup(client)
