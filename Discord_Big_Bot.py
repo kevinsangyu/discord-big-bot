@@ -7,7 +7,10 @@ import musicCog
 import wikiCog
 import os
 
-os.mkdir("logs")
+try:
+    os.mkdir("logs")
+except FileExistsError as e:
+    pass
 os.chdir("logs")
 
 client = commands.Bot(command_prefix='Kevin ')
