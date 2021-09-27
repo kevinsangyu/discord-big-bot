@@ -36,7 +36,20 @@ class WikiCog(commands.Cog):
     async def wiki(self, ctx, *keywords):
         keywords = " ".join(keywords)
         async with ctx.typing():
-            summary = wikipedia.summary(keywords)
+            try:
+                summary = wikipedia.summary(keywords)
+            except wikipedia.DisambiguationError as e:
+                msg = f"DisambiguationError. {keywords} may refer to:\n"
+                if len(e.options) > 5:
+                    for i in range(0, 5):
+                        msg += e.options[i] + "\n"
+                    msg += "...and " + str(len(e.options) - 5) + " more"
+                else:
+                    for option in e.options:
+                        msg += option + "\n"
+                await ctx.send(msg)
+                logger(f"Disambiguation error with keyword: {keywords}")
+                return
         await ctx.send(summary)
         logger("Wiki summary of: " + keywords)
 
@@ -48,12 +61,9 @@ class WikiCog(commands.Cog):
             amount = 10
         msg = ""
         async with ctx.typing():
-            results = wikipedia.random(amount)
-            if len(results) > 1:
-                for result in results:
-                    msg += result + "\n"
-            else:
-                msg += results
+            results = wikipedia.random()
+            for result in results:
+                msg += result + "\n"
         await ctx.send(msg)
         logger("Random wiki pages: \n" + msg)
 
