@@ -118,7 +118,7 @@ class MusicCog(commands.Cog):
     @tasks.loop(seconds=5.0)
     async def check(self):
         for vc in self.client.voice_clients:
-            if vc.is_playing() is False:
+            if vc.is_playing() is False and vc.is_paused() is False:
                 if vc.guild.id in self.music_queue and self.music_queue[vc.guild.id] != []:
                     song = self.music_queue[vc.guild.id].pop(0)
                     with youtube_dl.YoutubeDL(self.YDL_OPTIONS) as ydl:
