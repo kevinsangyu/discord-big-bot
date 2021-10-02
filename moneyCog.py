@@ -329,7 +329,46 @@ class MoneyCog(commands.Cog):
             transaction_logger(ctx.guild.id, f"{user.display_name} lost {bet_amount} in a dice game.")
         save_bank(bankdict)
 
-    # rewards command - json file so i can keep adding and removing rewards from it.
+    @commands.command(description="See the rewards you can purchase with your Wu points.")
+    async def rewards(self, ctx):
+        rewardsfile = open("rewards.txt")
+        reward = json.load(rewardsfile)
+        rewardsfile.close()
+        msg = "```"
+        for item in reward:
+            msg += f"\n{item} -- {reward[item]}"
+        msg += "```"
+        await ctx.send(msg)
+
+    @commands.command(description="Add a reward onto the Wu rewards. Only permitted by bank administrators.")
+    async def addreward(self, ctx, price, *description):
+        if ctx.author.id != self.botkeys["Lucasid"] and ctx.author.id != self.botkeys["Kevinid"]:
+            await ctx.send("You do not have permissions to do that.")
+            return
+        price = int(price)
+        rewardsfile = open("rewards.txt")
+        reward = json.load(rewardsfile)
+        rewardsfile.close()
+        description = " ".join(description)
+        reward[description] = price
+        with open("rewards.txt", "w") as output:
+            json.dump(reward, output)
+        await ctx.send("New reward added. Do `Kevin rewards` to view them.")
+
+    @commands.command(description="Remove a reward from the Wu rewards. Only permitted by bank administrators.")
+    async def remreward(self, ctx, *description):
+        if ctx.author.id != self.botkeys["Lucasid"] and ctx.author.id != self.botkeys["Kevinid"]:
+            await ctx.send("You do not have permissions to do that.")
+            return
+        description = " ".join(description)
+        rewardsfile = open("rewards.txt")
+        reward = json.load(rewardsfile)
+        rewardsfile.close()
+        removed = reward.pop(description)
+        with open("rewards.txt", "w") as output:
+            json.dump(reward, output)
+        await ctx.send(f"`{removed}` was removed from the Wu rewards. View them with `Kevin rewards`.")
+
 
 
 def setup(client):
