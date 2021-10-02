@@ -2,20 +2,28 @@ import random
 from datetime import *
 import discord
 from discord.ext import commands
-from discord import errors
 import musicCog
 import wikiCog
+import moneyCog
 import os
+import Botkeys
 
 try:
     os.mkdir("logs")
-except FileExistsError as e:
+except FileExistsError:
     pass
-os.chdir("logs")
+try:
+    os.mkdir("transfers")
+except FileExistsError:
+    pass
 
-client = commands.Bot(command_prefix='Kevin ')
+intents = discord.Intents.default()
+intents.members = True
+client = commands.Bot(command_prefix='Kevin ', intents = intents)
 musicCog.setup(client)
 wikiCog.setup(client)
+moneyCog.setup(client)
+botkeys = Botkeys.get_keys()
 
 
 def time():
@@ -24,10 +32,12 @@ def time():
 
 
 def logger(message):
+    os.chdir("logs")
     today = date.today()
     logfile = open(today.strftime("%d%m%Y") + ".txt", 'a', encoding='utf-8')
     logfile.write("\n" + time() + message)
     logfile.close()
+    os.chdir("..")
 
 
 @client.event
@@ -187,16 +197,6 @@ async def teams(ctx, amount, *, memberlist):
     logger(logstr)
 
 
-@client.command(aliases=['whatis', 'define'], description="Gives description of a given command.")
-async def commands(ctx, arg=""):
-    if arg == "":
-        await ctx.send_help()
-        logger("Commands were printed.")
-    else:
-        await ctx.send_help(arg)
-        logger("Specific command was printed: " + arg)
-
-
 @client.command(aliases=['randomint', 'randint'], description="Chooses a random number between 1 and a given number.")
 async def number(ctx, upperlimit):
     negative = 0
@@ -226,38 +226,6 @@ async def choose(ctx, *, itemlist):
     result = random.choice(items)
     logger("Chosen item: " + result)
     await ctx.send("I choose " + result + ".")
-
-
-@client.command(aliases=['spr', 'SPR', 'scissorspaperrock', 'paperrockscissors', 'rockpaperscissors', 'rockscissors'
-                                                                                                      'paper'],
-                description="Play scissors paper rock against Big Bot. eg Kevin paperscissorsrock scissors")
-async def paperscissorsrock(ctx, answer):
-    comp = random.choice(['s', 'r', 'p'])
-    answer = answer[0].lower()
-    logger("Scissors paper rock called with: " + answer)
-    if answer == "s":
-        if comp == 's':
-            await ctx.send("I picked Scissors.\nTie.")
-        elif comp == 'r':
-            await ctx.send("I picked Rock.\nI win.")
-        elif comp == 'p':
-            await ctx.send("I picked Paper.\nYou win.")
-    elif answer == "r":
-        if comp == 's':
-            await ctx.send("I picked Scissors.\nYou win.")
-        elif comp == 'r':
-            await ctx.send("I picked Rock.\nTie.")
-        elif comp == 'p':
-            await ctx.send("I picked Paper.\nI win.")
-    elif answer == "p":
-        if comp == 's':
-            await ctx.send("I picked Scissors.\nI win.")
-        elif comp == 'r':
-            await ctx.send("I picked Rock.\nYou win.")
-        elif comp == 'p':
-            await ctx.send("I picked Paper.\nTie.")
-    else:
-        await ctx.send("Pick either Scissors, Paper or Rock.")
 
 
 @client.command(description="Returns the diagonal value of two given side values.")
@@ -474,4 +442,4 @@ async def poll(ctx, *, question):
         await msg.add_reaction(number_emojis[i])
 
 
-client.run('BotToken')
+client.run(botkeys["BotToken"])

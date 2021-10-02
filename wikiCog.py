@@ -1,7 +1,7 @@
 import wikipedia
-import discord
 from discord.ext import commands
 from datetime import *
+import os
 
 
 def time():
@@ -10,10 +10,12 @@ def time():
 
 
 def logger(message):
+    os.chdir("logs")
     today = date.today()
     logfile = open(today.strftime("%d%m%Y") + ".txt", 'a', encoding='utf-8')
     logfile.write("\n" + time() + message)
     logfile.close()
+    os.chdir("..")
 
 
 class WikiCog(commands.Cog):

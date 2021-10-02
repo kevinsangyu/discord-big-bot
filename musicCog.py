@@ -1,10 +1,11 @@
 import random
 import discord
-from discord.ext import commands
-from discord.ext import tasks
+from discord.ext import tasks, commands
 import youtube_dl
 from datetime import *
 from googleapiclient.discovery import build
+import os
+import Botkeys
 
 
 def time():
@@ -13,10 +14,12 @@ def time():
 
 
 def logger(message):
+    os.chdir("logs")
     today = date.today()
     logfile = open(today.strftime("%d%m%Y") + ".txt", 'a', encoding='utf-8')
     logfile.write("\n" + time() + message)
     logfile.close()
+    os.chdir("..")
 
 
 class Song(object):
@@ -27,13 +30,14 @@ class Song(object):
 
 class MusicCog(commands.Cog):
     def __init__(self, client):
+        self.botkeys = Botkeys.get_keys()
         self.client = client
         self.music_queue = {}
         self.check.start()
         self.FFMPEG_OPTIONS = {'before_options': ' -reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5',
                                'options': '-vn'}
         self.YDL_OPTIONS = {'format': 'bestaudio'}
-        self.youtube = build('youtube', 'v3', developerKey="key")
+        self.youtube = build('youtube', 'v3', developerKey=self.botkeys["Youtube"])
 
     def cog_unload(self):
         self.check.cancel()
@@ -110,7 +114,6 @@ class MusicCog(commands.Cog):
                         info = ydl.extract_info(url, download=False)
                         url2 = info['formats'][0]['url']
                         source = await discord.FFmpegOpusAudio.from_probe(url2, **self.FFMPEG_OPTIONS)
-                                                                          #executable=r"D:\Program Files\ffmpeg-2021-09-16-git-8f92a1862a-essentials_build\bin\ffmpeg.exe")
                         await ctx.send(f"Now playing {song.name}.")
                         vc.play(source)
                         logger("Playing: " + song.name)
@@ -125,7 +128,6 @@ class MusicCog(commands.Cog):
                         info = ydl.extract_info(song.url, download=False)
                         url2 = info['formats'][0]['url']
                         source = await discord.FFmpegOpusAudio.from_probe(url2, **self.FFMPEG_OPTIONS)
-                                                                          #executable=r"D:\Program Files\ffmpeg-2021-09-16-git-8f92a1862a-essentials_build\bin\ffmpeg.exe")
                         vc.play(source)
                         logger("Playing: " + song.name)
 
@@ -142,7 +144,6 @@ class MusicCog(commands.Cog):
                     info = ydl.extract_info(song.url, download=False)
                     url2 = info['formats'][0]['url']
                     source = await discord.FFmpegOpusAudio.from_probe(url2, **self.FFMPEG_OPTIONS)
-                                                                      #executable=r"D:\Program Files\ffmpeg-2021-09-16-git-8f92a1862a-essentials_build\bin\ffmpeg.exe")
                     vc.play(source)
                     await ctx.send(f"Now playing {song.name}.")
                     logger("Playing: " + song.name)
