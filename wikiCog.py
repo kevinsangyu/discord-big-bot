@@ -21,7 +21,7 @@ class WikiCog(commands.Cog):
         self.client = client
 
     @commands.command(description="Search wikipedia with the keywords and return the results, usually to do another"
-                      "command, like wikisumm.")
+                      "command, like wikisumm.", aliases=['search'])
     async def wikisearch(self, ctx, *keywords):
         keywords = " ".join(keywords)
         async with ctx.typing():
@@ -37,13 +37,13 @@ class WikiCog(commands.Cog):
         keywords = " ".join(keywords)
         async with ctx.typing():
             try:
-                summary = wikipedia.summary(keywords)
+                summary = wikipedia.summary(keywords, auto_suggest=False)
             except wikipedia.DisambiguationError as e:
                 msg = f"DisambiguationError. {keywords} may refer to:\n"
                 if len(e.options) > 5:
                     for i in range(0, 5):
                         msg += e.options[i] + "\n"
-                    msg += "...and " + str(len(e.options) - 5) + " more"
+                    msg += "...and " + str(len(e.options) - 5) + f" more\n I suggest you do Kevin wikisearch {keywords}"
                 else:
                     for option in e.options:
                         msg += option + "\n"
