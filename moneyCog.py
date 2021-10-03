@@ -231,6 +231,7 @@ class MoneyCog(commands.Cog):
             os.chdir(str(ctx.guild.id))
         except FileNotFoundError:
             await ctx.send("No logs from this server yet.")
+            os.chdir("..")
             return
         today = date.today()
         try:
@@ -238,6 +239,8 @@ class MoneyCog(commands.Cog):
             num_lines = sum(1 for line in open(today.strftime("%d%m%Y") + ".txt"))
         except FileNotFoundError:
             await ctx.send("No logs from today.")
+            os.chdir("..")
+            os.chdir("..")
             return
         msg = "```"
         if num_lines > 20:
