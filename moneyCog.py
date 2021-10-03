@@ -71,7 +71,7 @@ class MoneyCog(commands.Cog):
         self.salary.cancel()
 
     @commands.command(description="Adds a user to the bank, i.e. initialising a bank account."
-                                  "Can only be ran by bank administrators.")
+                                  "Can only be run by bank administrators.")
     async def register(self, ctx, user: discord.Member):
         if ctx.author.id != self.botkeys["Lucasid"] and ctx.author.id != self.botkeys["Kevinid"]:
             await ctx.send("You do not have permission to do that.")
@@ -85,6 +85,24 @@ class MoneyCog(commands.Cog):
             bankdict[str(ctx.guild.id)][str(user.id)] = 0
             save_bank(bankdict)
             ctx.send("User registered.")
+
+    @commands.command(description="Removes a user from the bank, i.e. deletes a bank account."
+                                  "Can only be run by bank administrators.")
+    async def unregister(self, ctx, user: discord.Member):
+        if ctx.author.id != self.botkeys["Lucasid"] and ctx.author.id != self.botkeys["Kevinid"]:
+            await ctx.send("You do not have permission to do that.")
+            return
+        bankdict = get_bank()
+        if str(ctx.guild.id) not in bankdict.keys():
+            await ctx.send("This server does not have a bank allocated.")
+            return
+        if str(user.id) in bankdict[str(ctx.guild.id)].keys():
+            amount = bankdict[str(ctx.guild.id)].pop(str(user.id))
+            await ctx.send(f"{user.display_name} with {amount} has been unregistered.")
+            logger(f"{user.display_name} with {amount} has been unregistered.")
+        else:
+            await ctx.send("That user does not have a bank account.")
+        save_bank(bankdict)
 
     @commands.command(description="Adds users in a role to the bank, i.e. initialising a bank account."
                                   "Can only be ran by Kevin or Lucas.")
