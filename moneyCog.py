@@ -59,12 +59,16 @@ class MoneyCog(commands.Cog):
     def __init__(self, client):
         self.botkeys = Botkeys.get_keys()
         self.client = client
+        self.salary.start()
         try:
             bankfile = open("bank.txt", "x")
             bankfile.write("{}")
             bankfile.close()
         except FileExistsError:
             pass
+
+    def cog_unload(self):
+        self.salary.cancel()
 
     @commands.command(description="Adds a user to the bank, i.e. initialising a bank account."
                                   "Can only be ran by bank administrators.")
