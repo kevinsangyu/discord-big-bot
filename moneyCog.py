@@ -189,6 +189,7 @@ class MoneyCog(commands.Cog):
                     user = await self.client.fetch_user(int(member))
                     transaction_logger(guild, f"{user.display_name} was paid their salary of "
                                               f"{salary_amount} Wu points.")
+            save_bank(bankdict)
 
     @commands.command(aliases=['leader', 'lb'], description="Shows the rankings of the first 10 "
                                                             "users with the most Wu points.")
@@ -244,7 +245,8 @@ class MoneyCog(commands.Cog):
             return
         msg = "```"
         if num_lines > 20:
-            msg += logfile.readline(20)
+            for i in range(20):
+                msg += logfile.readline()
             msg += "Only 20 lines printed to prevent verbosity; Contact owner for full logs."
         else:
             for line in logfile:
