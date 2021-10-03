@@ -184,7 +184,7 @@ class MoneyCog(commands.Cog):
         if now.strftime("%w%H") == "000":
             bankdict = get_bank()
             for guild in bankdict.keys():
-                for member in guild.keys():
+                for member in bankdict[guild].keys():
                     bankdict[guild][member] += salary_amount
                     user = await self.client.fetch_user(int(member))
                     transaction_logger(guild, f"{user.display_name} was paid their salary of "
