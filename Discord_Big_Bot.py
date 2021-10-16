@@ -112,6 +112,7 @@ async def coinflip(ctx):
     logger("Heads or tails, result: " + reply)
 
 
+@commands.has_permissions(manage_messages=True)
 @client.command(aliases=['prune'], description="Deletes the most recent messages. The number does not count the messag"
                                                "e itself.")
 async def clear(ctx, amount=0):
@@ -122,7 +123,6 @@ async def clear(ctx, amount=0):
 @client.command(description="Warns a user.")
 async def warn(ctx, member: discord.Member):
     msg = "You have 2 weeks."
-    await ctx.channel.purge(limit=1)
     await member.send(msg)
     logger("Warning: " + str(member))
 
@@ -130,7 +130,6 @@ async def warn(ctx, member: discord.Member):
 @client.command(aliases=['pm', 'msg', 'whisper', 'message'], description="The bot will send a message to the given user"
                                                                          ". EG: Kevin dm @Shrewd#3618 testing message")
 async def dm(ctx, member: discord.Member, *, message):
-    await ctx.channel.purge(limit=1)
     await member.send(message)
     logger("Sending message to: " + str(member) + ". The message: " + message)
 

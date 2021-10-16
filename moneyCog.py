@@ -13,7 +13,7 @@ def time():
     return now.strftime("[%H:%M:%S] --- ")
 
 
-def transaction_logger(guild, message):
+def transaction_logger(guild, message):  # separate log, for the logs command
     os.chdir("transfers")
     try:
         os.mkdir(str(guild))
@@ -107,7 +107,7 @@ class MoneyCog(commands.Cog):
     @commands.command(description="Adds users in a role to the bank, i.e. initialising a bank account."
                                   "Can only be ran by Kevin or Lucas.")
     async def massregister(self, ctx, role: discord.Role):
-        if ctx.author.id != self.botkeys["Lucasid"] and ctx.author.id != self.botkeys["Kevinid"]:  # lucas then kevin
+        if ctx.author.id != self.botkeys["Lucasid"] and ctx.author.id != self.botkeys["Kevinid"]:
             await ctx.send("You do not have permission to do that.")
             return
         bankdict = get_bank()
@@ -155,12 +155,11 @@ class MoneyCog(commands.Cog):
         if str(ctx.guild.id) not in bankdict.keys():
             await ctx.send("This server does not have a bank allocated.")
             return
-        if str(ctx.author.id) not in bankdict[str(ctx.guild.id)].keys() or str(user.id) not in bankdict[
-            str(ctx.guild.id)].keys():
+        if str(ctx.author.id) not in bankdict[str(ctx.guild.id)].keys() or str(user.id) not in bankdict[str(ctx.guild.id)].keys():
             await ctx.send("You or the receiver have not been registered into the bank."
                            "Contact the bank administrators for more info.")
             return
-        if ctx.author.id != self.botkeys["Lucasid"] and ctx.author.id != self.botkeys["Kevinid"]\
+        if ctx.author.id != self.botkeys["Lucasid"] and ctx.author.id != self.botkeys["Kevinid"] \
                 and ctx.author.id != self.botkeys["Bigbotid"]:
             if bankdict[str(ctx.guild.id)][str(ctx.author.id)] - amount < 0:
                 await ctx.send("You have insufficient Wu points.")
@@ -175,7 +174,7 @@ class MoneyCog(commands.Cog):
     @commands.command(aliases=["ded"], description="Deducts x amount of Wu points from a given user. Can only be used"
                                                    "by bank administrators. It is possible to go into the negatives.")
     async def deduct(self, ctx, amount, user: discord.Member):
-        if ctx.author.id != self.botkeys["Lucasid"] and ctx.author.id != self.botkeys["Kevinid"]\
+        if ctx.author.id != self.botkeys["Lucasid"] and ctx.author.id != self.botkeys["Kevinid"] \
                 and ctx.author.id != self.botkeys["Bigbotid"]:
             await ctx.send("You do not have permission to do that.")
             return
@@ -193,11 +192,11 @@ class MoneyCog(commands.Cog):
         await ctx.send(f"{amount} Wu points was deducted. Their balance is now"
                        f" {bankdict[str(ctx.guild.id)][str(user.id)]} Wu points")
         transaction_logger(ctx.guild.id, f"{user.display_name}'s balance was deducted by {amount}, their balance is now"
-                                f" {bankdict[str(ctx.guild.id)][str(user.id)]} Wu points")
+                                         f" {bankdict[str(ctx.guild.id)][str(user.id)]} Wu points")
 
     @tasks.loop(hours=1)
-    async def salary(self):
-        now = datetime.now()
+    async def salary(self):  # at the moment it gives everyone in every guild a weekly salary of 50
+        now = datetime.now()  # if i wanted to have custom salaries, I'll have to make another json file for it
         salary_amount = 50
         if now.strftime("%w%H") == "000":
             bankdict = get_bank()
@@ -329,7 +328,7 @@ class MoneyCog(commands.Cog):
                 bankdict[str(ctx.guild.id)][str(ctx.author.id)] -= bet_amount
                 transaction_logger(ctx.guild.id, user.display_name + f" lost {bet_amount} during a SPR game.")
             elif result == 2:
-                bet_amount = math.floor(bet_amount/2)
+                bet_amount = math.floor(bet_amount / 2)
                 msg += f"\n You won {bet_amount} Wu points."
                 bankdict[str(ctx.guild.id)][str(ctx.author.id)] += bet_amount
                 transaction_logger(ctx.guild.id, user.display_name + f" won {bet_amount} during a SPR game.")
@@ -378,6 +377,7 @@ class MoneyCog(commands.Cog):
         rewardsfile.close()
         description = " ".join(description)
         reward[description] = price
+        reward.sort()
         with open("rewards.txt", "w") as output:
             json.dump(reward, output)
         await ctx.send("New reward added. Do `Kevin rewards` to view them.")
@@ -394,8 +394,7 @@ class MoneyCog(commands.Cog):
         removed = reward.pop(description)
         with open("rewards.txt", "w") as output:
             json.dump(reward, output)
-        await ctx.send(f"`{removed}` was removed from the Wu rewards. View them with `Kevin rewards`.")
-
+        await ctx.send(f"`{description}` was removed from the Wu rewards. View them with `Kevin rewards`.")
 
 
 def setup(client):
