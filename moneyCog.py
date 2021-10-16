@@ -378,7 +378,6 @@ class MoneyCog(commands.Cog):
         description = " ".join(description)
         reward[description] = price
         reward = sorted(reward.items(), key=lambda x: x[1], reverse=True)
-        reward.sort()
         with open("rewards.txt", "w") as output:
             json.dump(reward, output)
         await ctx.send("New reward added. Do `Kevin rewards` to view them.")
