@@ -360,9 +360,10 @@ class MoneyCog(commands.Cog):
         rewardsfile = open("rewards.txt")
         reward = json.load(rewardsfile)
         rewardsfile.close()
+        reward = sorted(reward.items(), key=lambda x: x[1], reverse=True)
         msg = "```"
         for item in reward:
-            msg += f"\n{item} -- {reward[item]}"
+            msg += f"\n{item[0]} -- {item[1]}"
         msg += "```"
         await ctx.send(msg)
 
@@ -377,7 +378,6 @@ class MoneyCog(commands.Cog):
         rewardsfile.close()
         description = " ".join(description)
         reward[description] = price
-        reward = sorted(reward.items(), key=lambda x: x[1], reverse=True)
         with open("rewards.txt", "w") as output:
             json.dump(reward, output)
         await ctx.send("New reward added. Do `Kevin rewards` to view them.")
