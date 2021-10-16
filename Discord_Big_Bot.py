@@ -51,6 +51,8 @@ async def on_ready():
 async def on_command_error(ctx, error):
     if isinstance(error, discord.ext.commands.MissingRequiredArgument):
         msg = f"Missing required argument(s): {error.param}\nI suggest you do `Kevin help {ctx.command}`"
+    elif isinstance(error, discord.ext.commands.MissingPermissions):
+        msg = f"Missing permissions: {error.missing_perms}."
     elif isinstance(error, discord.ext.commands.CommandNotFound):
         msg = f"No such command\nI suggest you do `Kevin help`"
     elif isinstance(error, discord.ext.commands.MemberNotFound):
