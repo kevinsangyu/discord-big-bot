@@ -76,7 +76,7 @@ class MusicCog(commands.Cog):
     @commands.command(description="Play a video's audio from provided youtube link. If something is already playing,"
                                   "it will be queued.")
     @commands.cooldown(1, 3)
-    async def play(self, ctx, *url):
+    async def play(self, ctx, *url):  # list index out of range error somewhere when a video link is provided.
         url = " ".join(url)
         if url[0:38] == "https://www.youtube.com/playlist?list=":
             await self.playlist(ctx, url)
@@ -94,6 +94,9 @@ class MusicCog(commands.Cog):
                 )
                 response = request.execute()
                 url = "https://www.youtube.com/watch?v=" + response['items'][0]['id']['videoId']
+            else:
+                if '&' in url:  # sometimes the link fails to work because there's extra info about uploaders and stuff.
+                    url = url[:url.find("&")]
             request = self.youtube.videos().list(
                 part='snippet',
                 id=url[32:]
@@ -113,7 +116,7 @@ class MusicCog(commands.Cog):
                     with youtube_dl.YoutubeDL(self.YDL_OPTIONS) as ydl:
                         info = ydl.extract_info(url, download=False)
                         url2 = info['formats'][0]['url']
-                        source = await discord.FFmpegOpusAudio.from_probe(url2, **self.FFMPEG_OPTIONS)
+                        source = await discord.FFmpegOpusAudio.from_probe(url2, **self.FFMPEG_OPTIONS)  #, executable=self.botkeys['ffmpegPATH'])
                         await ctx.send(f"Now playing {song.name}.")
                         vc.play(source)
                         logger("Playing: " + song.name)
@@ -127,8 +130,12 @@ class MusicCog(commands.Cog):
                     with youtube_dl.YoutubeDL(self.YDL_OPTIONS) as ydl:
                         info = ydl.extract_info(song.url, download=False)
                         url2 = info['formats'][0]['url']
-                        source = await discord.FFmpegOpusAudio.from_probe(url2, **self.FFMPEG_OPTIONS)
-                        vc.play(source)
+                        source = await discord.FFmpegOpusAudio.from_probe(url2, **self.FFMPEG_OPTIONS)  #, executable=self.botkeys['ffmpegPATH'])
+                        try:
+                            vc.play(source)
+                        except discord.errors.ClientException:
+                            self.music_queue[vc.guild.id].insert(0, song)
+                            print("Already playing, skip check cancelled.")
                         logger("Playing: " + song.name)
 
     @commands.command(aliases=['s'], description="Skips to the next song in the queue.")
@@ -143,7 +150,7 @@ class MusicCog(commands.Cog):
                 with youtube_dl.YoutubeDL(self.YDL_OPTIONS) as ydl:
                     info = ydl.extract_info(song.url, download=False)
                     url2 = info['formats'][0]['url']
-                    source = await discord.FFmpegOpusAudio.from_probe(url2, **self.FFMPEG_OPTIONS)
+                    source = await discord.FFmpegOpusAudio.from_probe(url2, **self.FFMPEG_OPTIONS)  #, executable=self.botkeys['ffmpegPATH'])
                     vc.play(source)
                     await ctx.send(f"Now playing {song.name}.")
                     logger("Playing: " + song.name)
