@@ -139,33 +139,34 @@ async def dm(ctx, member: discord.Member, *, message):
 @client.command(aliases=['Paint', 'assign'],
                 description="Gives a user another user in the group, with no repeats. "
                             "Separate names with only a single space.")
-async def paint(ctx, *, memberlist=""):
+async def paint(ctx, *, memberlist):
     logger("Paint command received, string: " + memberlist)
-    if memberlist == "":
-        await ctx.send("No names were provided.")
-    else:
-        members = memberlist.split(" ")
-        logger("Provided members: " + str(members))
-        while True:
-            reset = 0
-            results = []
-            used = []
-            for x in range(0, len(members)):
+    members = memberlist.split(" ")
+    if len(members) == 1:
+        ctx.send("Not enough members provided.")
+        logger("Not enough members provided for paint command.")
+        return
+    logger("Provided members: " + str(members))
+    while True:
+        reset = 0
+        results = []
+        used = []
+        for x in range(0, len(members)):
+            choice = random.choice(members)
+            while members[x] == choice or choice in used:
                 choice = random.choice(members)
-                while members[x] == choice or choice in used:
-                    choice = random.choice(members)
-                    if len(used) == len(members) - 1 and members[x] == choice:
-                        reset = 1
-                        break
-                results.append(members[x] + " --> ||" + choice + "||")
-                used.append(choice)
-            if reset == 0:
-                break
-        logstr = "\n               ------Results------"
-        for x in results:
-            await ctx.send(x)
-            logstr += "\n               " + x
-        logger(logstr)
+                if len(used) == len(members) - 1 and members[x] == choice:
+                    reset = 1
+                    break
+            results.append(members[x] + " --> ||" + choice + "||")
+            used.append(choice)
+        if reset == 0:
+            break
+    logstr = "\n               ------Results------"
+    for x in results:
+        await ctx.send(x)
+        logstr += "\n               " + x
+    logger(logstr)
 
 
 @client.command(aliases=['team', 'split', 'Team', 'Teams', 'Split'],
@@ -411,7 +412,6 @@ async def fact(ctx):
         "You have achieved nothing in your life and will die a meaningless death",
         "The last time you exercised was probably when Trump was still president",
         "Fuck you",
-        "Don't be ashamed of who you are. \nThat's your parents job",
         "Take a piece of paper, fold it in half eight times, soak it in olive oil, and shove it up your ass."
     ]
     i = random.randint(1, 100)
