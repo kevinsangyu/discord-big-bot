@@ -143,7 +143,7 @@ async def paint(ctx, *, memberlist):
     logger("Paint command received, string: " + memberlist)
     members = memberlist.split(" ")
     if len(members) == 1:
-        ctx.send("Not enough members provided.")
+        await ctx.send("Not enough members provided.")
         logger("Not enough members provided for paint command.")
         return
     logger("Provided members: " + str(members))
