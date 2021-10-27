@@ -80,17 +80,14 @@ class MusicCog(commands.Cog):
     @commands.command(description="Play a video's audio from provided youtube link. If something is already playing,"
                                   "it will be queued.")
     @commands.cooldown(1, 3)
-    async def play(self, ctx, *url):  # list index out of range error somewhere when a video link is provided.
+    async def play(self, ctx, *url):
         url = " ".join(url)
         if url[0:38] == "https://www.youtube.com/playlist?list=":
             await self.playlist(ctx, url)
             return
-        if ctx.guild.id not in self.music_queue:
-            self.music_queue[ctx.guild.id] = []
-        if ctx.guild.id not in self.music_channel:
-            self.music_channel[ctx.guild.id] = ctx.channel
+        self.music_channel[ctx.guild.id] = ctx.channel
         if ctx.voice_client is None:
-            await ctx.send("I must be connected to a voice channel first.")
+            await self.join(ctx)
         else:
             if url[0:31] != "https://www.youtube.com/watch?v=":
                 request = self.youtube.search().list(
@@ -101,7 +98,7 @@ class MusicCog(commands.Cog):
                 response = request.execute()
                 url = "https://www.youtube.com/watch?v=" + response['items'][0]['id']['videoId']
             else:
-                if '&' in url:  # sometimes the link fails to work because there's extra info about uploaders and stuff.
+                if '&' in url:
                     url = url[:url.find("&")]
             request = self.youtube.videos().list(
                 part='snippet',
@@ -112,7 +109,10 @@ class MusicCog(commands.Cog):
             song = Song(name, url)
             async with ctx.typing():
                 if ctx.voice_client.is_playing() or ctx.voice_client.is_paused():
-                    self.music_queue[ctx.guild.id].append(song)
+                    if ctx.guild.id not in self.music_queue:
+                        self.music_queue[ctx.guild.id] = [song]
+                    else:
+                        self.music_queue[ctx.guild.id].append(song)
                     await ctx.send(
                         f"Queued as number {str(len(self.music_queue[ctx.guild.id]))} in queue.\nType `Kevin queue` to"
                         f" see your queue.")
@@ -122,7 +122,8 @@ class MusicCog(commands.Cog):
                     with youtube_dl.YoutubeDL(self.YDL_OPTIONS) as ydl:
                         info = ydl.extract_info(url, download=False)
                         url2 = info['formats'][0]['url']
-                        source = await discord.FFmpegOpusAudio.from_probe(url2, **self.FFMPEG_OPTIONS)  #, executable=self.botkeys['ffmpegPATH'])
+                        source = await discord.FFmpegOpusAudio.from_probe(url2, **self.FFMPEG_OPTIONS)
+                        # source = await discord.FFmpegOpusAudio.from_probe(url2, **self.FFMPEG_OPTIONS, executable=self.botkeys['ffmpegPATH'])
                         self.current[ctx.guild.id] = song
                         await ctx.send(f"Now playing {song.name}.")
                         vc.play(source)
@@ -132,23 +133,28 @@ class MusicCog(commands.Cog):
     async def check(self):
         for vc in self.client.voice_clients:
             if vc.is_playing() is False and vc.is_paused() is False:
-                if vc.guild.id in self.music_queue and self.music_queue[vc.guild.id] != []:
-                    song = self.music_queue[vc.guild.id].pop(0)
-                    with youtube_dl.YoutubeDL(self.YDL_OPTIONS) as ydl:
-                        info = ydl.extract_info(song.url, download=False)
-                        url2 = info['formats'][0]['url']
-                        source = await discord.FFmpegOpusAudio.from_probe(url2, **self.FFMPEG_OPTIONS)  #, executable=self.botkeys['ffmpegPATH'])
-                        try:
-                            vc.play(source)
-                        except discord.errors.ClientException:
-                            self.music_queue[vc.guild.id].insert(0, song)
-                            print("Already skipping, skip check cancelled.")
-                            return
-                        self.current[vc.guild.id] = song
-                        await self.music_channel[vc.guild.id].send(f"Now playing {song.name}")
-                        logger("Playing: " + song.name)
-                elif vc.guild.id not in self.music_queue or self.music_queue[vc.guild.id] == []:
-                    self.current[vc.guild.id] = None
+                if vc.guild.id in self.music_queue:
+                    if not self.music_queue[vc.guild.id]:
+                        self.music_queue.pop(vc.guild.id)
+                        self.current[vc.guild.id] = None
+                        await self.music_channel[vc.guild.id].send("Music queue concluded.")
+                        logger("Music queue concluded.")
+                    else:
+                        song = self.music_queue[vc.guild.id].pop(0)
+                        with youtube_dl.YoutubeDL(self.YDL_OPTIONS) as ydl:
+                            info = ydl.extract_info(song.url, download=False)
+                            url2 = info['formats'][0]['url']
+                            source = await discord.FFmpegOpusAudio.from_probe(url2, **self.FFMPEG_OPTIONS)
+                            # source = await discord.FFmpegOpusAudio.from_probe(url2, **self.FFMPEG_OPTIONS, executable=self.botkeys['ffmpegPATH'])
+                            try:
+                                vc.play(source)
+                            except discord.errors.ClientException:
+                                self.music_queue[vc.guild.id].insert(0, song)
+                                print("Already skipping, skip check cancelled.")
+                                return
+                            self.current[vc.guild.id] = song
+                            await self.music_channel[vc.guild.id].send(f"Now playing {song.name}")
+                            logger("Playing: " + song.name)
 
     @commands.command(aliases=['s'], description="Skips to the next song in the queue.")
     async def skip(self, ctx):
@@ -157,25 +163,32 @@ class MusicCog(commands.Cog):
             await ctx.send("I must be connected to a voice channel first.")
         else:
             vc.stop()
-            if ctx.guild.id in self.music_queue and self.music_queue[ctx.guild.id]:
-                song = self.music_queue[ctx.guild.id].pop(0)
-                with youtube_dl.YoutubeDL(self.YDL_OPTIONS) as ydl:
-                    info = ydl.extract_info(song.url, download=False)
-                    url2 = info['formats'][0]['url']
-                    source = await discord.FFmpegOpusAudio.from_probe(url2, **self.FFMPEG_OPTIONS)  #, executable=self.botkeys['ffmpegPATH'])
-                    try:
-                        vc.play(source)
-                    except discord.errors.ClientException:
-                        self.music_queue[vc.guild.id].insert(0, song)
-                        print("Already skipping, skip cancelled.")
-                        return
-                    self.current[ctx.guild.id] = song
-                    await ctx.send(f"Now playing {song.name}.")
-                    logger("Playing: " + song.name)
+            if ctx.guild.id in self.music_queue:
+                if not self.music_queue[vc.guild.id]:
+                    self.music_queue.pop(vc.guild.id)
+                    self.current[vc.guild.id] = None
+                    await self.music_channel[vc.guild.id].send("Music queue concluded.")
+                    logger("Music queue concluded.")
+                else:
+                    song = self.music_queue[ctx.guild.id].pop(0)
+                    with youtube_dl.YoutubeDL(self.YDL_OPTIONS) as ydl:
+                        info = ydl.extract_info(song.url, download=False)
+                        url2 = info['formats'][0]['url']
+                        source = await discord.FFmpegOpusAudio.from_probe(url2, **self.FFMPEG_OPTIONS)
+                        # source = await discord.FFmpegOpusAudio.from_probe(url2, **self.FFMPEG_OPTIONS, executable=self.botkeys['ffmpegPATH'])
+                        try:
+                            vc.play(source)
+                        except discord.errors.ClientException:
+                            self.music_queue[vc.guild.id].insert(0, song)
+                            print("Already skipping, skip cancelled.")
+                            return
+                        self.current[ctx.guild.id] = song
+                        await ctx.send(f"Now playing {song.name}.")
+                        logger("Playing: " + song.name)
 
     @commands.command(aliases=['st'], description="Skips to the specified song in the queue. Removes all songs before"
                                                   " said song form the queue.")
-    async def skipto(self, ctx, index):  # kind of broken right now, since the skipping takes a while and the check loop kicks in before it starts playing.
+    async def skipto(self, ctx, index):
         if ctx.voice_client is None:
             await ctx.send("I must be connected to a voice channel first.")
         else:
@@ -204,18 +217,19 @@ class MusicCog(commands.Cog):
                 playlistId=playlist_id
             )
             response = request.execute()
-            if ctx.guild.id not in self.music_queue:
-                self.music_queue[ctx.guild.id] = []
-            queue_list = [] # this is a workaround for the looped check() function to not trigger the bot to play when this function will try to play anyway.
+            queue_list = []
             for item in response["items"]:
                 song = Song(item['snippet']['title'], "https://www.youtube.com/watch?v=" + item["contentDetails"]["videoId"])
                 queue_list.append(song)
             if ctx.voice_client.is_playing() is False:
                 url = queue_list.pop(0).url
                 await self.play(ctx, url)
+            amount_added = str(len(queue_list))
+            if ctx.guild.id not in self.music_queue:
+                self.music_queue[ctx.guild.id] = [queue_list.pop(0)]
             while queue_list:
                 self.music_queue[ctx.guild.id].append(queue_list.pop(0))
-            await ctx.send("Added " + str(len(response["items"])) + " songs to the queue.")
+            await ctx.send("Added " + amount_added + " songs to the queue.")
 
     @commands.command(aliases=['q'], description="Displays the current music queue.")
     async def queue(self, ctx):
@@ -225,7 +239,7 @@ class MusicCog(commands.Cog):
             msg = ""
             for i in range(0, len(self.music_queue[ctx.guild.id])):
                 msg += str(i + 1) + ": " + self.music_queue[ctx.guild.id][i].name + "\n"
-        await ctx.send(msg)
+        await ctx.send("```\n" + msg + "\n```")
         logger("Queue was printed as: \n" + msg)
 
     @commands.command(description="Removes a song or songs from the music queue. If removing multiple, separate the "
@@ -291,8 +305,10 @@ class MusicCog(commands.Cog):
             await ctx.send("I must be connected to a voice channel first.")
         else:
             ctx.voice_client.stop()
-            self.music_queue.pop(ctx.guild.id)
-            self.music_channel.pop(ctx.guild.id)
+            if ctx.guild.id in self.music_queue:
+                self.music_queue.pop(ctx.guild.id)
+            if ctx.guild.id in self.music_channel:
+                self.music_channel.pop(ctx.guild.id)
             self.current[ctx.guild.id] = None
             await ctx.send("Stopped playing and cleared queue.")
 
