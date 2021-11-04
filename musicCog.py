@@ -205,32 +205,31 @@ class MusicCog(commands.Cog):
     @commands.cooldown(1, 10)
     async def playlist(self, ctx, url):
         if ctx.voice_client is None:
-            await ctx.send("I must be connected to a voice channel first.")
+            await self.join(ctx)
+        if url[0:38] == "https://www.youtube.com/playlist?list=":
+            playlist_id = url[38:]
         else:
-            if url[0:38] == "https://www.youtube.com/playlist?list=":
-                playlist_id = url[38:]
-            else:
-                await ctx.send("Invalid link. I suggest you do `Kevin help playlist`.")
-                return
-            request = self.youtube.playlistItems().list(
-                part="snippet,contentDetails",
-                maxResults=100,
-                playlistId=playlist_id
-            )
-            response = request.execute()
-            queue_list = []
-            for item in response["items"]:
-                song = Song(item['snippet']['title'], "https://www.youtube.com/watch?v=" + item["contentDetails"]["videoId"])
-                queue_list.append(song)
-            if ctx.voice_client.is_playing() is False:
-                url = queue_list.pop(0).url
-                await self.play(ctx, url)
-            amount_added = str(len(queue_list))
-            if ctx.guild.id not in self.music_queue:
-                self.music_queue[ctx.guild.id] = [queue_list.pop(0)]
-            while queue_list:
-                self.music_queue[ctx.guild.id].append(queue_list.pop(0))
-            await ctx.send("Added " + amount_added + " songs to the queue.")
+            await ctx.send("Invalid link. I suggest you do `Kevin help playlist`.")
+            return
+        request = self.youtube.playlistItems().list(
+            part="snippet,contentDetails",
+            maxResults=100,
+            playlistId=playlist_id
+        )
+        response = request.execute()
+        queue_list = []
+        for item in response["items"]:
+            song = Song(item['snippet']['title'], "https://www.youtube.com/watch?v=" + item["contentDetails"]["videoId"])
+            queue_list.append(song)
+        if ctx.voice_client.is_playing() is False:
+            url = queue_list.pop(0).url
+            await self.play(ctx, url)
+        amount_added = str(len(queue_list))
+        if ctx.guild.id not in self.music_queue:
+            self.music_queue[ctx.guild.id] = [queue_list.pop(0)]
+        while queue_list:
+            self.music_queue[ctx.guild.id].append(queue_list.pop(0))
+        await ctx.send("Added " + amount_added + " songs to the queue.")
 
     @commands.command(aliases=['q'], description="Displays the current music queue.")
     async def queue(self, ctx):
