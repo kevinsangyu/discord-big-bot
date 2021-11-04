@@ -5,12 +5,10 @@ from discord.ext import commands
 import musicCog
 import wikiCog
 import moneyCog
+import translateCog
 import os
 import Botkeys
-import urllib.request
-import urllib.parse
-import json
-from urllib.error import HTTPError
+
 
 try:
     os.mkdir("logs")
@@ -27,6 +25,7 @@ client = commands.Bot(command_prefix='Kevin ', intents=intents)
 musicCog.setup(client)
 wikiCog.setup(client)
 moneyCog.setup(client)
+translateCog.setup(client)
 botkeys = Botkeys.get_keys()
 
 
@@ -447,42 +446,9 @@ async def poll(ctx, *, question):
         await msg.add_reaction(number_emojis[i])
 
 
-@client.command(description="Translates a given string to english. Only supports 13 languages:\n"
-                              "korean, english, japanese, traditional chinese, simplified chinese, vietnamese, "
-                              "indonesian, thai, german, russian, spanish, italian and french.")
-async def translate(ctx, *, sentence):
-    keys = Botkeys.get_keys()
-    data = "query=" + urllib.parse.quote(sentence)
-    request = urllib.request.Request("https://openapi.naver.com/v1/papago/detectLangs")
-    request.add_header("X-Naver-Client-Id", keys["translate_id"])
-    request.add_header("X-Naver-Client-Secret", keys["translate_secret"])
-    response = urllib.request.urlopen(request, data=data.encode("utf-8"))
-    rescode = response.getcode()
-    if rescode == 200:
-        response_body = response.read()
-        srclang = json.loads(response_body.decode('utf-8'))["langCode"]
-        logger("Translate command: Given sentence is in: " + srclang)
-    else:
-        await ctx.send("Error Code:" + rescode)
-        logger("Error Code: " + rescode)
-        return
-    data = "source=" + srclang + "&target=en&text=" + urllib.parse.quote(sentence)
-    request = urllib.request.Request("https://openapi.naver.com/v1/papago/n2mt")
-    request.add_header("X-Naver-Client-Id", keys["translate_id"])
-    request.add_header("X-Naver-Client-Secret", keys["translate_secret"])
-    response = urllib.request.urlopen(request, data=data.encode("utf-8"))
-    rescode = response.getcode()
-    if rescode == 200:
-        response_body = response.read()
-        output = response_body.decode('utf-8')
-        output = json.loads(output)
-        await ctx.send(output["message"]["result"]["srcLangType"] + " to " +
-                       output["message"]["result"]["tarLangType"] + ": " + output["message"]["result"]["translatedText"])
-        logger(output["message"]["result"]["srcLangType"] + " to " + output["message"]["result"]["tarLangType"])
-    else:
-        await ctx.send("Error Code:" + rescode)
-        logger("Error Code: " + rescode)
-        return
+@client.command(description="Wishes luck to kevin")
+async def goodluck(ctx, *rest):
+    ctx.send("Thanks.")
 
 
 client.run(botkeys["BotToken"])

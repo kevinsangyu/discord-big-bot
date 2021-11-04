@@ -44,7 +44,7 @@ class MusicCog(commands.Cog):
     def cog_unload(self):
         self.check.cancel()
 
-    @commands.command(aliases=['connect'], description="The bot joins the voice channel of the sender.")
+    @commands.command(aliases=['connect', 'cum'], description="The bot joins the voice channel of the sender.")
     async def join(self, ctx):
         if ctx.author.voice is None:
             await ctx.send("You need to be connected to a voice channel.")
@@ -88,46 +88,47 @@ class MusicCog(commands.Cog):
         self.music_channel[ctx.guild.id] = ctx.channel
         if ctx.voice_client is None:
             await self.join(ctx)
+        if url[0:31] == "https://www.youtube.com/watch?v=":
+            if '&' in url:
+                url = url[:url.find("&")]
+        elif url[0:20] == "https://www.youtu.be/":
+            url = "https://www.youtube.com/watch?v=" + url[21:]
         else:
-            if url[0:31] != "https://www.youtube.com/watch?v=":
-                request = self.youtube.search().list(
-                    part="id",
-                    maxResults=1,
-                    q=url
-                )
-                response = request.execute()
-                url = "https://www.youtube.com/watch?v=" + response['items'][0]['id']['videoId']
-            else:
-                if '&' in url:
-                    url = url[:url.find("&")]
-            request = self.youtube.videos().list(
-                part='snippet',
-                id=url[32:]
+            request = self.youtube.search().list(
+                part="id",
+                maxResults=1,
+                q=url
             )
             response = request.execute()
-            name = response['items'][0]['snippet']['title']
-            song = Song(name, url)
-            async with ctx.typing():
-                if ctx.voice_client.is_playing() or ctx.voice_client.is_paused():
-                    if ctx.guild.id not in self.music_queue:
-                        self.music_queue[ctx.guild.id] = [song]
-                    else:
-                        self.music_queue[ctx.guild.id].append(song)
-                    await ctx.send(
-                        f"Queued as number {str(len(self.music_queue[ctx.guild.id]))} in queue.\nType `Kevin queue` to"
-                        f" see your queue.")
-                    logger("Added to queue: " + song.name)
+            url = "https://www.youtube.com/watch?v=" + response['items'][0]['id']['videoId']
+        request = self.youtube.videos().list(
+            part='snippet',
+            id=url[32:]
+        )
+        response = request.execute()
+        name = response['items'][0]['snippet']['title']
+        song = Song(name, url)
+        async with ctx.typing():
+            if ctx.voice_client.is_playing() or ctx.voice_client.is_paused():
+                if ctx.guild.id not in self.music_queue:
+                    self.music_queue[ctx.guild.id] = [song]
                 else:
-                    vc = ctx.voice_client
-                    with youtube_dl.YoutubeDL(self.YDL_OPTIONS) as ydl:
-                        info = ydl.extract_info(url, download=False)
-                        url2 = info['formats'][0]['url']
-                        source = await discord.FFmpegOpusAudio.from_probe(url2, **self.FFMPEG_OPTIONS)
-                        # source = await discord.FFmpegOpusAudio.from_probe(url2, **self.FFMPEG_OPTIONS, executable=self.botkeys['ffmpegPATH'])
-                        self.current[ctx.guild.id] = song
-                        await ctx.send(f"Now playing {song.name}.")
-                        vc.play(source)
-                        logger("Playing: " + song.name)
+                    self.music_queue[ctx.guild.id].append(song)
+                await ctx.send(
+                    f"Queued as number {str(len(self.music_queue[ctx.guild.id]))} in queue.\nType `Kevin queue` to"
+                    f" see your queue.")
+                logger("Added to queue: " + song.name)
+            else:
+                vc = ctx.voice_client
+                with youtube_dl.YoutubeDL(self.YDL_OPTIONS) as ydl:
+                    info = ydl.extract_info(url, download=False)
+                    url2 = info['formats'][0]['url']
+                    source = await discord.FFmpegOpusAudio.from_probe(url2, **self.FFMPEG_OPTIONS)
+                    # source = await discord.FFmpegOpusAudio.from_probe(url2, **self.FFMPEG_OPTIONS, executable=self.botkeys['ffmpegPATH'])
+                    self.current[ctx.guild.id] = song
+                    await ctx.send(f"Now playing {song.name}.")
+                    vc.play(source)
+                    logger("Playing: " + song.name)
 
     @tasks.loop(seconds=5.0)
     async def check(self):
