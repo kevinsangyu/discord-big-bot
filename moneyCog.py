@@ -49,6 +49,11 @@ def save_bank(bankdict):
         json.dump(bankdict, output)
 
 
+def check_balance(guild, member):
+    bankdict = get_bank()
+    return int(bankdict[str(guild.id)][str(member.id)])
+
+
 class MoneyMember:
     def __init__(self, id, money):
         self.id = id
@@ -155,13 +160,14 @@ class MoneyCog(commands.Cog):
         if str(ctx.guild.id) not in bankdict.keys():
             await ctx.send("This server does not have a bank allocated.")
             return
-        if str(ctx.author.id) not in bankdict[str(ctx.guild.id)].keys() or str(user.id) not in bankdict[str(ctx.guild.id)].keys():
+        if str(ctx.author.id) not in bankdict[str(ctx.guild.id)].keys() or str(user.id) not in bankdict[
+            str(ctx.guild.id)].keys():
             await ctx.send("You or the receiver have not been registered into the bank."
                            "Contact the bank administrators for more info.")
             return
         if ctx.author.id != self.botkeys["Lucasid"] and ctx.author.id != self.botkeys["Kevinid"] \
                 and ctx.author.id != self.botkeys["Bigbotid"]:
-            if bankdict[str(ctx.guild.id)][str(ctx.author.id)] - amount < 0:
+            if check_balance(ctx.guild, ctx.author) - amount < 0:
                 await ctx.send("You have insufficient Wu points.")
                 return
             bankdict[str(ctx.guild.id)][str(ctx.author.id)] -= amount
@@ -203,9 +209,7 @@ class MoneyCog(commands.Cog):
             for guild in bankdict.keys():
                 for member in bankdict[guild].keys():
                     bankdict[guild][member] += salary_amount
-                    user = await self.client.fetch_user(int(member))
-                    transaction_logger(guild, f"{user.display_name} was paid their salary of "
-                                              f"{salary_amount} Wu points.")
+                transaction_logger(guild, "Salary was paid to everyone registered.")
             save_bank(bankdict)
 
     @commands.command(aliases=['leader', 'lb'], description="Shows the rankings of the first 10 "
@@ -281,6 +285,10 @@ class MoneyCog(commands.Cog):
                     "eg Kevin spr scissors 20")
     async def paperscissorsrock(self, ctx, answer, bet_amount):
         bet_amount = abs(int(bet_amount))
+        bal = check_balance(ctx.guild, ctx.author)
+        if bal < bet_amount:
+            await ctx.send(f"Not enough funds. You only have {bal} Wu points.")
+            return
         comp = random.choice(['s', 'r', 'p'])
         answer = answer[0].lower()
         if answer not in ['s', 'r', 'p']:
@@ -337,11 +345,15 @@ class MoneyCog(commands.Cog):
 
     @commands.command(description="Guess the resulting number on a 6-sided dice roll.")
     async def dice(self, ctx, guess, bet_amount):
+        bet_amount = abs(int(bet_amount))
+        bal = check_balance(ctx.guild, ctx.author)
+        if bal < bet_amount:
+            await ctx.send(f"Not enough funds. You only have {bal} Wu points.")
+            return
         guess = int(guess)
         if guess not in [1, 2, 3, 4, 5, 6]:
             await ctx.send("Invalid guess; Guess must be between 1 and 6 inclusive.")
             return
-        bet_amount = abs(int(bet_amount))
         comp = random.randint(1, 6)
         bankdict = get_bank()
         user = await self.client.fetch_user(ctx.author.id)
