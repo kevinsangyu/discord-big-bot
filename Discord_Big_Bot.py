@@ -448,7 +448,7 @@ async def poll(ctx, *, question):
 
 @client.command(description="Wishes luck to kevin")
 async def goodluck(ctx, *rest):
-    ctx.send("Thanks.")
+    await ctx.send("Thanks.")
 
 
 client.run(botkeys["BotToken"])
