@@ -8,6 +8,7 @@ import moneyCog
 import translateCog
 import os
 import Botkeys
+import re
 
 
 try:
@@ -449,6 +450,60 @@ async def poll(ctx, *, question):
 @client.command(description="Wishes luck to kevin")
 async def goodluck(ctx, *rest):
     await ctx.send("Thanks.")
+
+
+@client.command(description="Evalues a simple mathematical equation, such as: \n(21/3)*4+4\nSo far, can handle "
+                "brackets[()], multiplication[*], division[/], addition[+] and substraction[-].")
+async def calc(ctx, *, eq):
+    await ctx.send(sequential_calc(eq))
+
+
+def sequential_calc(equation):
+    if isinstance(equation, str):
+        equation = re.sub("[^0-9|.|\-|+|*|/|(|)]", "", equation)
+        line = re.split(r"(-|\+|\*|/|\(|\))", equation)
+        i = 0
+        while i < len(line):
+            if not line[i]:
+                line.pop(i)
+            else:
+                i += 1
+        return sequential_calc(line)
+    elif isinstance(equation, list):
+        while len(equation) > 1:
+            if ")" in equation and "(" not in equation:
+                return "Invalid syntax: No opening bracket to match closing bracket."
+            elif "(" in equation and ")" not in equation:
+                return "Invalid syntax: No closing bracket to match opening bracket."
+            elif "(" in equation:
+                opener = equation.index("(")
+                for index, value in enumerate(equation):
+                    if value == ")":
+                        closer = index
+                else:
+                    newlist = []
+                    for k in range(opener+1, closer):
+                        newlist.append(equation[k])
+                    for k in range(opener+1, closer+1):
+                        equation.pop(opener + 1)
+                    equation[opener] = sequential_calc(newlist)
+            elif "*" in equation:
+                index = equation.index("*")
+                equation[index - 1] = float(equation[index - 1]) * float(equation[index + 1])
+                del equation[index:index + 2]
+            elif "/" in equation:
+                index = equation.index("/")
+                equation[index - 1] = float(equation[index - 1]) / float(equation[index + 1])
+                del equation[index:index + 2]
+            elif "+" in equation:
+                index = equation.index("+")
+                equation[index - 1] = float(equation[index - 1]) + float(equation[index + 1])
+                del equation[index:index + 2]
+            elif "-" in equation:
+                index = equation.index("-")
+                equation[index - 1] = float(equation[index - 1]) - float(equation[index + 1])
+                del equation[index:index + 2]
+        return str(equation[0])
 
 
 client.run(botkeys["BotToken"])
