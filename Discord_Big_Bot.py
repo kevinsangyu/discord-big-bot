@@ -6,9 +6,9 @@ import musicCog
 import wikiCog
 import moneyCog
 import translateCog
+import mathCog
 import os
 import Botkeys
-import re
 
 
 try:
@@ -27,6 +27,7 @@ musicCog.setup(client)
 wikiCog.setup(client)
 moneyCog.setup(client)
 translateCog.setup(client)
+mathCog.setup(client)
 botkeys = Botkeys.get_keys()
 
 
@@ -203,26 +204,6 @@ async def teams(ctx, amount, *, memberlist):
     logger(logstr)
 
 
-@client.command(aliases=['randomint', 'randint'], description="Chooses a random number between 1 and a given number.")
-async def number(ctx, upperlimit):
-    negative = 0
-    try:
-        if int(upperlimit) < 0:
-            upperlimit = abs(int(upperlimit))
-            negative = 1
-            result = random.randint(1, upperlimit)
-        else:
-            result = random.randint(1, int(upperlimit))
-    except TypeError and ValueError as e:
-        result = "Invalid input: {" + e + "}"
-    if negative == 0:
-        await ctx.send(str(result))
-        logger("A random number between 1 and " + str(upperlimit) + ", with result: " + str(result))
-    else:
-        await ctx.send("-" + str(result))
-        logger("A random number between 1 and -" + str(upperlimit) + ", with result: -" + str(result))
-
-
 @client.command(aliases=['pick'], description="Chooses an item in a given set of items. Separate names with a single"
                                               " space.")
 async def choose(ctx, *, itemlist):
@@ -232,16 +213,6 @@ async def choose(ctx, *, itemlist):
     result = random.choice(items)
     logger("Chosen item: " + result)
     await ctx.send("I choose " + result + ".")
-
-
-@client.command(description="Returns the diagonal value of two given side values.")
-async def pythag(ctx, sidevalue1, sidevalue2):
-    logger("Pythag called with values " + sidevalue1 + " and " + sidevalue2)
-    sidevalue1 = float(sidevalue1)
-    sidevalue2 = float(sidevalue2)
-    result = str((sidevalue1 ** 2 + sidevalue2 ** 2) ** 0.5)
-    logger("Pythag answer: " + result)
-    await ctx.send(result)
 
 
 @client.command(description="Returns a random fact.")
@@ -450,60 +421,6 @@ async def poll(ctx, *, question):
 @client.command(description="Wishes luck to kevin")
 async def goodluck(ctx, *rest):
     await ctx.send("Thanks.")
-
-
-@client.command(description="Evalues a simple mathematical equation, such as: \n(21/3)*4+4\nSo far, can handle "
-                "brackets[()], multiplication[*], division[/], addition[+] and substraction[-].")
-async def calc(ctx, *, eq):
-    await ctx.send(sequential_calc(eq))
-
-
-def sequential_calc(equation):
-    if isinstance(equation, str):
-        equation = re.sub("[^0-9|.|\-|+|*|/|(|)]", "", equation)
-        line = re.split(r"(-|\+|\*|/|\(|\))", equation)
-        i = 0
-        while i < len(line):
-            if not line[i]:
-                line.pop(i)
-            else:
-                i += 1
-        return sequential_calc(line)
-    elif isinstance(equation, list):
-        while len(equation) > 1:
-            if ")" in equation and "(" not in equation:
-                return "Invalid syntax: No opening bracket to match closing bracket."
-            elif "(" in equation and ")" not in equation:
-                return "Invalid syntax: No closing bracket to match opening bracket."
-            elif "(" in equation:
-                opener = equation.index("(")
-                for index, value in enumerate(equation):
-                    if value == ")":
-                        closer = index
-                else:
-                    newlist = []
-                    for k in range(opener+1, closer):
-                        newlist.append(equation[k])
-                    for k in range(opener+1, closer+1):
-                        equation.pop(opener + 1)
-                    equation[opener] = sequential_calc(newlist)
-            elif "*" in equation:
-                index = equation.index("*")
-                equation[index - 1] = float(equation[index - 1]) * float(equation[index + 1])
-                del equation[index:index + 2]
-            elif "/" in equation:
-                index = equation.index("/")
-                equation[index - 1] = float(equation[index - 1]) / float(equation[index + 1])
-                del equation[index:index + 2]
-            elif "+" in equation:
-                index = equation.index("+")
-                equation[index - 1] = float(equation[index - 1]) + float(equation[index + 1])
-                del equation[index:index + 2]
-            elif "-" in equation:
-                index = equation.index("-")
-                equation[index - 1] = float(equation[index - 1]) - float(equation[index + 1])
-                del equation[index:index + 2]
-        return str(equation[0])
 
 
 client.run(botkeys["BotToken"])
