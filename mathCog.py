@@ -108,6 +108,10 @@ class MathCog(commands.Cog):
         await ctx.send(ans)
         logger("Calc concluded with answer: " + str(ans))
 
+    @commands.command(description="Converts farenheit to celcius.")
+    async def ftoc(self, ctx, temp: float):
+        await ctx.send(str((temp-32)*5/9) + u'\N{DEGREE SIGN}' + "C")
+
 
 def setup(client):
     client.add_cog(MathCog(client))
