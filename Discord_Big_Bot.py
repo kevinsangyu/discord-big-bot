@@ -431,8 +431,8 @@ async def randomss(ctx, amount: int = 1):
         amount = 10
     alphanumeric = "1 2 3 4 5 6 7 8 9 0 a b c d e f g h i j k l m n o p q r s t u v w x y z"
     alpha = alphanumeric.split(" ")
-    result = "https://prnt.sc/"
     for i in range(0, amount):
+        result = "https://prnt.sc/"
         for j in range(6):
             result += random.choice(alpha)
         await ctx.send(result)
