@@ -427,15 +427,17 @@ async def goodluck(ctx, *rest):
 async def randomss(ctx, amount: int = 1):
     if amount < 1:
         amount = 1
-    elif amount > 10:
-        amount = 10
+    elif amount > 5:
+        amount = 5
     alphanumeric = "1 2 3 4 5 6 7 8 9 0 a b c d e f g h i j k l m n o p q r s t u v w x y z"
     alpha = alphanumeric.split(" ")
+    result = ""
     for i in range(0, amount):
-        result = "https://prnt.sc/"
+        page = "https://prnt.sc/"
         for j in range(6):
-            result += random.choice(alpha)
-        await ctx.send(result)
+            page += random.choice(alpha)
+        result += page + "\n"
+    await ctx.send(result)
 
 
 client.run(botkeys["BotToken"])
