@@ -23,11 +23,9 @@ except FileExistsError:
 intents = discord.Intents.default()
 intents.members = True
 client = commands.Bot(command_prefix='Kevin ', intents=intents)
-musicCog.setup(client)
-wikiCog.setup(client)
-moneyCog.setup(client)
-translateCog.setup(client)
-mathCog.setup(client)
+cogs = [musicCog, wikiCog, moneyCog, translateCog, mathCog]
+for cog in cogs:
+    cog.setup(client)
 botkeys = Botkeys.get_keys()
 
 
@@ -421,6 +419,23 @@ async def poll(ctx, *, question):
 @client.command(description="Wishes luck to kevin")
 async def goodluck(ctx, *rest):
     await ctx.send("Thanks.")
+
+
+@client.command(description="Retrives a given amount (max 10) of random screenshot from lightshot's website, prnt.sc\n "
+                            "Warning: These are really random, you might see things that you shouldn't or wouldn't want"
+                            " to.")
+async def randomss(ctx, amount: int = 1):
+    if amount < 1:
+        amount = 1
+    elif amount > 10:
+        amount = 10
+    alphanumeric = "1 2 3 4 5 6 7 8 9 0 a b c d e f g h i j k l m n o p q r s t u v w x y z"
+    alpha = alphanumeric.split(" ")
+    result = "https://prnt.sc/"
+    for i in range(0, amount):
+        for j in range(6):
+            result += random.choice(alpha)
+        await ctx.send(result)
 
 
 client.run(botkeys["BotToken"])
