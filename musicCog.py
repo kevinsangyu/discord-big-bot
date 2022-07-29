@@ -80,7 +80,7 @@ class MusicCog(commands.Cog):
     @commands.command(description="Play a video's audio from provided youtube link. If something is already playing,"
                                   "it will be queued.")
     @commands.cooldown(1, 3)
-    async def play(self, ctx, *url):
+    async def play(self, ctx, *url): # link no longer work for some reason
         url = " ".join(url)
         if url[0:38] == "https://www.youtube.com/playlist?list=":
             await self.playlist(ctx, url)
