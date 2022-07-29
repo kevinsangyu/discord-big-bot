@@ -1,0 +1,11 @@
+
+[00:00:57] --- Connected to voice channel.
+[00:01:10] --- Playing: Bang Bang (From 'Minions: The Rise of Gru' Soundtrack)
+[00:06:28] --- Playing: Isolation...
+[00:07:32] --- Added to queue: Ram Ranch
+[00:07:35] --- Playing: Ram Ranch
+[00:09:27] --- Error: Command raised an exception: IndexError: list index out of range
+[00:09:49] --- Music queue concluded.
+[00:10:03] --- Error: Command raised an exception: IndexError: list index out of range
+[00:11:01] --- Warning: NoblemanWich#2119
+[00:11:16] --- Error: Command raised an exception: IndexError: list index out of range

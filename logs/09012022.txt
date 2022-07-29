@@ -1,0 +1,79 @@
+
+[20:28:03] --- Connected to voice channel.
+[20:28:09] --- Playing: Anderson .Paak - Fire in the Sky (Official Audio) | Shang-Chi: The Album
+[20:28:12] --- Added to queue: Bruno Mars, Anderson .Paak, Silk Sonic - Skate [Official Music Video]
+[20:28:20] --- Added to queue: Make It Better (feat. Smokey Robinson)
+[20:28:37] --- Added to queue: Bruno Mars, Anderson. Paak, Silk Sonic - Smokin Out The Window (Audio)
+[20:28:46] --- Added to queue: Bruno Mars, Anderson. Paak, Silk Sonic - Leave The Door Open (Audio)
+[20:28:47] --- Queue was printed as: 
+1: Bruno Mars, Anderson .Paak, Silk Sonic - Skate [Official Music Video]
+2: Make It Better (feat. Smokey Robinson)
+3: Bruno Mars, Anderson. Paak, Silk Sonic - Smokin Out The Window (Audio)
+4: Bruno Mars, Anderson. Paak, Silk Sonic - Leave The Door Open (Audio)
+
+[20:29:13] --- Added to queue: The Weeknd ft. Lil Wayne - I Heard You’re Married (Official Audio)
+[20:31:33] --- Playing: Bruno Mars, Anderson .Paak, Silk Sonic - Skate [Official Music Video]
+[20:34:58] --- Playing: Make It Better (feat. Smokey Robinson)
+[20:38:44] --- Playing: Bruno Mars, Anderson. Paak, Silk Sonic - Smokin Out The Window (Audio)
+[20:41:11] --- Added to queue: Elton John, Dua Lipa - Cold Heart (PNAU Remix) (Official Video)
+[20:42:04] --- Playing: Bruno Mars, Anderson. Paak, Silk Sonic - Leave The Door Open (Audio)
+[20:43:18] --- Added to queue: Post Malone and The Weeknd - One Right Now (Official Video)
+[20:46:08] --- Playing: The Weeknd ft. Lil Wayne - I Heard You’re Married (Official Audio)
+[20:50:34] --- Playing: Elton John, Dua Lipa - Cold Heart (PNAU Remix) (Official Video)
+[20:54:53] --- Playing: Post Malone and The Weeknd - One Right Now (Official Video)
+[20:56:07] --- Added to queue: Dominic Fike - Double Negative (Skeleton Milkshake) (Official Audio)
+[20:58:34] --- Playing: Dominic Fike - Double Negative (Skeleton Milkshake) (Official Audio)
+[20:58:37] --- Music queue concluded.
+[20:59:44] --- Playing: Dominic Fike - Double Negative (Skeleton Milkshake) (Official Audio)
+[21:02:05] --- Playing: Peach - Kevin Abstract
+[21:04:06] --- Playing: Peach - Kevin Abstract
+[21:07:42] --- Playing: Justin Bieber - Peaches ft. Daniel Caesar, Giveon
+[21:08:10] --- Added to queue: BTOB (비투비) - 그리워하다 (MISSING YOU) Lyrics (Color Coded/ENG/ROM/HAN)
+[21:11:04] --- Playing: BTOB (비투비) - 그리워하다 (MISSING YOU) Lyrics (Color Coded/ENG/ROM/HAN)
+[21:15:02] --- Music queue concluded.
+[21:15:28] --- Playing: CUCO - Lo Que Siento (Official Audio)
+[21:15:48] --- Queue was printed as: 
+There is nothing in your music queue.
+[21:16:21] --- Added to queue: Enter Galactic - Kid Cudi
+[21:16:33] --- Added to queue: Dua Lipa - Hallucinate (Official Music Video)
+[21:20:44] --- Playing: Enter Galactic - Kid Cudi
+[21:25:10] --- Playing: Dua Lipa - Hallucinate (Official Music Video)
+[21:25:21] --- Added to queue: ODDTAXI - Opening | ODDTAXI
+[21:25:25] --- Queue was printed as: 
+1: ODDTAXI - Opening | ODDTAXI
+
+[21:25:47] --- Added to queue: NIKI - Every Summertime (Official Video)
+[21:28:43] --- Playing: ODDTAXI - Opening | ODDTAXI
+[21:30:28] --- Playing: NIKI - Every Summertime (Official Video)
+[21:34:02] --- Music queue concluded.
+[21:34:38] --- Playing: Mac DeMarco - Chamber of Reflection
+[21:34:54] --- Added to queue: Woodkid - Guns for Hire | Arcane League of Legends | Riot Games Music
+[21:34:56] --- Queue was printed as: 
+1: Woodkid - Guns for Hire | Arcane League of Legends | Riot Games Music
+
+[21:38:33] --- Playing: Woodkid - Guns for Hire | Arcane League of Legends | Riot Games Music
+[21:38:35] --- Added to queue: Paranoid
+[21:39:32] --- Added to queue: Tyler, The Creator - WUSYANAME (Official Video)
+[21:39:37] --- Queue was printed as: 
+1: Paranoid
+2: Tyler, The Creator - WUSYANAME (Official Video)
+
+[21:42:23] --- Playing: Paranoid
+[21:44:11] --- Added to queue: Soulja Boy Tell'em ft. Sammie - Kiss Me Thru The Phone (Official Video)
+[21:47:04] --- Playing: Tyler, The Creator - WUSYANAME (Official Video)
+[21:49:09] --- Playing: Soulja Boy Tell'em ft. Sammie - Kiss Me Thru The Phone (Official Video)
+[21:52:27] --- Music queue concluded.
+[21:52:31] --- Playing: Prince & The Revolution - When Doves Cry (Official Music Video)
+[21:54:27] --- Added to queue: Lil Nas X - SUN GOES DOWN (Official Video)
+[21:55:54] --- Added to queue: Aries - PONY (Audio)
+[21:56:19] --- Playing: Lil Nas X - SUN GOES DOWN (Official Video)
+[21:56:26] --- Added to queue: bbno$ - u mad! (Official Audio)
+[21:59:13] --- Playing: Aries - PONY (Audio)
+[22:01:19] --- Playing: bbno$ - u mad! (Official Audio)
+[22:03:52] --- Music queue concluded.
+[22:04:43] --- Playing: Lil Nas X - LOST IN THE CITADEL
+[22:05:13] --- Added to queue: Mac Miller - Blue World
+[22:05:32] --- Added to queue: YEEK - Only in the West (Official Video)
+[22:07:38] --- Playing: Mac Miller - Blue World
+[22:11:15] --- Playing: YEEK - Only in the West (Official Video)
+[22:14:17] --- Music queue concluded.

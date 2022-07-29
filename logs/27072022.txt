@@ -1,0 +1,6 @@
+
+[00:14:53] --- Poll called with prompt: Cannonball?, and options: ['1⃣ Yes\n', '2⃣ No\n']
+[20:42:38] --- Connected to voice channel.
+[20:42:41] --- Playing: Lil Uzi Vert "F.F. (Final Fantasy)" Live @ Rolling Loud Miami
+[20:42:59] --- Playing: Lil Uzi Vert  - Final Fantasy  [Official Audio]
+[20:46:22] --- Playing: Billie Eilish - Ocean Eyes (Blackbear Remix)

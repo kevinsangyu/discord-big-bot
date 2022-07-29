@@ -1,0 +1,17 @@
+
+[15:25:13] --- Calc called with raw string: 800/1.5
+[15:25:14] --- Calc concluded with answer: 533.3333333333334
+[15:25:28] --- Calc called with raw string: 533/60
+[15:25:28] --- Calc concluded with answer: 8.883333333333333
+[16:01:50] --- Calc called with raw string: 0/0
+[16:01:50] --- Error: Command raised an exception: ZeroDivisionError: float division by zero
+[16:52:46] --- Calc called with raw string: 0!
+[16:52:47] --- Calc concluded with answer: 0
+[22:44:40] --- Calc called with raw string: (4+6.5+7)*21.79
+[22:44:40] --- Calc concluded with answer: 381.325
+[22:44:51] --- Calc called with raw string: (4+6.5+7)*21
+[22:44:51] --- Calc concluded with answer: 367.5
+[22:45:48] --- Calc called with raw string: 7*21
+[22:45:48] --- Calc concluded with answer: 147.0
+[22:46:04] --- Calc called with raw string: 147+136.5+84
+[22:46:04] --- Calc concluded with answer: 367.5

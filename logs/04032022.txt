@@ -1,0 +1,5 @@
+
+[19:57:16] --- Heads or tails, result: Heads.
+[19:57:28] --- Heads or tails, result: Tails.
+[19:57:46] --- Heads or tails, result: Heads.
+[19:58:19] --- Heads or tails, result: Heads.

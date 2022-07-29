@@ -1,0 +1,226 @@
+
+[00:36:07] --- Poll called with prompt: Coke from Maccas taste different than Coke in a Can, and options: ['1⃣ Yes\n', '2⃣ No\n']
+[00:37:29] --- A real fact was printed.
+[00:37:50] --- Warning: em11y#2218
+[00:38:04] --- Warning: Sank#5019
+[00:39:12] --- Warning: Sank#5019
+[00:39:35] --- Warning: Sank#5019
+[00:42:22] --- Error: Command raised an exception: AttributeError: 'NoneType' object has no attribute 'is_playing'
+[18:57:47] --- Warning: kevim#3618
+[19:24:52] --- Connected to voice channel.
+[19:24:59] --- Playing: The Weeknd - Die For You (Official Audio)
+[19:25:03] --- Added to queue: Childish Gambino - This Is America (Official Video)
+[19:25:09] --- Added to queue: Childish Gambino - Sweatpants (Official Music Video) ft. Problem
+[19:25:29] --- Error: Command raised an exception: IndexError: list index out of range
+[19:25:59] --- Added to queue: Bang Bang (From 'Minions: The Rise of Gru' Soundtrack)
+[19:26:07] --- Added to queue: Frank Ocean - Pink + White
+[19:26:08] --- Queue was printed as: 
+1: Childish Gambino - This Is America (Official Video)
+2: Childish Gambino - Sweatpants (Official Music Video) ft. Problem
+3: Bang Bang (From 'Minions: The Rise of Gru' Soundtrack)
+4: Frank Ocean - Pink + White
+
+[19:26:48] --- Added to queue: Drake - IMY2 (Audio) ft. Kid Cudi
+[19:27:47] --- Added to queue: Des Rocs - Let Me Live / Let Me Die (Audio)
+[19:27:50] --- Queue was printed as: 
+1: Childish Gambino - This Is America (Official Video)
+2: Childish Gambino - Sweatpants (Official Music Video) ft. Problem
+3: Bang Bang (From 'Minions: The Rise of Gru' Soundtrack)
+4: Frank Ocean - Pink + White
+5: Drake - IMY2 (Audio) ft. Kid Cudi
+6: Des Rocs - Let Me Live / Let Me Die (Audio)
+
+[19:28:34] --- Added to queue: A Lovely Night
+[19:28:40] --- Queue was printed as: 
+1: Childish Gambino - This Is America (Official Video)
+2: Childish Gambino - Sweatpants (Official Music Video) ft. Problem
+3: Bang Bang (From 'Minions: The Rise of Gru' Soundtrack)
+4: Frank Ocean - Pink + White
+5: Drake - IMY2 (Audio) ft. Kid Cudi
+6: Des Rocs - Let Me Live / Let Me Die (Audio)
+7: A Lovely Night
+
+[19:28:54] --- Added to queue: Another Day of Sun - La La Land (Original Motion Picture Soundtrack)
+[19:28:56] --- Queue was printed as: 
+1: Childish Gambino - This Is America (Official Video)
+2: Childish Gambino - Sweatpants (Official Music Video) ft. Problem
+3: Bang Bang (From 'Minions: The Rise of Gru' Soundtrack)
+4: Frank Ocean - Pink + White
+5: Drake - IMY2 (Audio) ft. Kid Cudi
+6: Des Rocs - Let Me Live / Let Me Die (Audio)
+7: A Lovely Night
+8: Another Day of Sun - La La Land (Original Motion Picture Soundtrack)
+
+[19:29:05] --- Added to queue: 34+35
+[19:29:07] --- Queue was printed as: 
+1: Childish Gambino - This Is America (Official Video)
+2: Childish Gambino - Sweatpants (Official Music Video) ft. Problem
+3: Bang Bang (From 'Minions: The Rise of Gru' Soundtrack)
+4: Frank Ocean - Pink + White
+5: Drake - IMY2 (Audio) ft. Kid Cudi
+6: Des Rocs - Let Me Live / Let Me Die (Audio)
+7: A Lovely Night
+8: Another Day of Sun - La La Land (Original Motion Picture Soundtrack)
+9: 34+35
+
+[19:29:23] --- Playing: Childish Gambino - This Is America (Official Video)
+[19:30:02] --- Queue was printed as: 
+1: Childish Gambino - Sweatpants (Official Music Video) ft. Problem
+2: Bang Bang (From 'Minions: The Rise of Gru' Soundtrack)
+3: Frank Ocean - Pink + White
+4: Drake - IMY2 (Audio) ft. Kid Cudi
+5: Des Rocs - Let Me Live / Let Me Die (Audio)
+6: A Lovely Night
+7: Another Day of Sun - La La Land (Original Motion Picture Soundtrack)
+8: 34+35
+
+[19:33:34] --- Playing: Childish Gambino - Sweatpants (Official Music Video) ft. Problem
+[19:37:55] --- Playing: Bang Bang (From 'Minions: The Rise of Gru' Soundtrack)
+[19:40:19] --- Playing: Frank Ocean - Pink + White
+[19:43:29] --- Playing: Drake - IMY2 (Audio) ft. Kid Cudi
+[19:47:44] --- Playing: Des Rocs - Let Me Live / Let Me Die (Audio)
+[19:49:11] --- Error: Command raised an exception: IndexError: list index out of range
+[19:49:43] --- Added to queue: Psychedelic Porn Crumpets - Cornflake (Official Video)
+[19:51:10] --- Queue was printed as: 
+1: A Lovely Night
+2: Another Day of Sun - La La Land (Original Motion Picture Soundtrack)
+3: 34+35
+4: Psychedelic Porn Crumpets - Cornflake (Official Video)
+
+[19:51:13] --- Playing: A Lovely Night
+[19:51:26] --- Added to queue: Whiplash
+[19:52:57] --- Queue was printed as: 
+1: Another Day of Sun - La La Land (Original Motion Picture Soundtrack)
+2: 34+35
+3: Psychedelic Porn Crumpets - Cornflake (Official Video)
+4: Whiplash
+
+[19:54:08] --- Added to queue: Deftones - My Own Summer (Official Music Video) | Warner Vault
+[19:55:14] --- Playing: Another Day of Sun - La La Land (Original Motion Picture Soundtrack)
+[19:59:09] --- Playing: 34+35
+[19:59:27] --- Added to queue: Naruto Soundtrack- Sadness and Sorrow (FULL VERSION)
+[20:00:15] --- Queue was printed as: 
+1: Psychedelic Porn Crumpets - Cornflake (Official Video)
+2: Whiplash
+3: Deftones - My Own Summer (Official Music Video) | Warner Vault
+4: Naruto Soundtrack- Sadness and Sorrow (FULL VERSION)
+
+[20:02:09] --- Playing: Psychedelic Porn Crumpets - Cornflake (Official Video)
+[20:05:50] --- Playing: Whiplash
+[20:06:24] --- Added to queue: Gojira - Yama's messengers
+[20:07:03] --- Added to queue: Loathe - Is It Really You? (OFFICIAL AUDIO STREAM)
+[20:07:11] --- Queue was printed as: 
+1: Deftones - My Own Summer (Official Music Video) | Warner Vault
+2: Naruto Soundtrack- Sadness and Sorrow (FULL VERSION)
+3: Gojira - Yama's messengers
+4: Loathe - Is It Really You? (OFFICIAL AUDIO STREAM)
+
+[20:07:45] --- Added to queue: Bill Conti - Gonna Fly Now (Theme From Rocky)
+[20:07:49] --- Playing: Deftones - My Own Summer (Official Music Video) | Warner Vault
+[20:10:00] --- Added to queue: Spiritbox - Circle With Me [Lyric Video]
+[20:10:02] --- Queue was printed as: 
+1: Naruto Soundtrack- Sadness and Sorrow (FULL VERSION)
+2: Gojira - Yama's messengers
+3: Loathe - Is It Really You? (OFFICIAL AUDIO STREAM)
+4: Bill Conti - Gonna Fly Now (Theme From Rocky)
+5: Spiritbox - Circle With Me [Lyric Video]
+
+[20:11:00] --- Added to queue: April
+[20:11:01] --- Queue was printed as: 
+1: Naruto Soundtrack- Sadness and Sorrow (FULL VERSION)
+2: Gojira - Yama's messengers
+3: Loathe - Is It Really You? (OFFICIAL AUDIO STREAM)
+4: Bill Conti - Gonna Fly Now (Theme From Rocky)
+5: Spiritbox - Circle With Me [Lyric Video]
+6: April
+
+[20:11:39] --- Playing: Naruto Soundtrack- Sadness and Sorrow (FULL VERSION)
+[20:11:44] --- Playing: Gojira - Yama's messengers
+[20:12:04] --- Added to queue: Ariana Grande - ghostin (Audio)
+[20:12:28] --- Added to queue: whats up guys uhh good evening and shit its like 10:49 PM   full video
+[20:14:05] --- Playing: Loathe - Is It Really You? (OFFICIAL AUDIO STREAM)
+[20:14:22] --- Error: Command raised an exception: KeyError: 'videoId'
+[20:14:36] --- Added to queue: Berserk soundtrack - 4 Gatsu
+[20:16:48] --- Queue was printed as: 
+1: Bill Conti - Gonna Fly Now (Theme From Rocky)
+2: Spiritbox - Circle With Me [Lyric Video]
+3: April
+4: Ariana Grande - ghostin (Audio)
+5: whats up guys uhh good evening and shit its like 10:49 PM   full video
+6: Berserk soundtrack - 4 Gatsu
+
+[20:18:59] --- Playing: Bill Conti - Gonna Fly Now (Theme From Rocky)
+[20:21:54] --- Playing: Spiritbox - Circle With Me [Lyric Video]
+[20:22:01] --- Playing: April
+[20:22:54] --- Added to queue: Heavenly - Cigarettes After Sex
+[20:23:03] --- Queue was printed as: 
+1: Ariana Grande - ghostin (Audio)
+2: whats up guys uhh good evening and shit its like 10:49 PM   full video
+3: Berserk soundtrack - 4 Gatsu
+4: Heavenly - Cigarettes After Sex
+
+[20:23:52] --- Playing: Ariana Grande - ghostin (Audio)
+[20:24:20] --- Added to queue: 7Horse - Meth Lab Zoso Sticker - OFFICIAL VIDEO
+[20:25:55] --- Queue was printed as: 
+1: whats up guys uhh good evening and shit its like 10:49 PM   full video
+2: Berserk soundtrack - 4 Gatsu
+3: Heavenly - Cigarettes After Sex
+4: 7Horse - Meth Lab Zoso Sticker - OFFICIAL VIDEO
+
+[20:29:04] --- Playing: whats up guys uhh good evening and shit its like 10:49 PM   full video
+[20:29:45] --- Playing: Berserk soundtrack - 4 Gatsu
+[20:33:25] --- Playing: Heavenly - Cigarettes After Sex
+[20:38:15] --- Playing: 7Horse - Meth Lab Zoso Sticker - OFFICIAL VIDEO
+[20:38:38] --- Added to queue: Kenny Loggins - Footloose (Official Video)
+[20:42:05] --- Playing: Kenny Loggins - Footloose (Official Video)
+[20:42:40] --- Added to queue: Ariana Grande - R.E.M. (Audio)
+[20:45:05] --- Playing: Ariana Grande - R.E.M. (Audio)
+[20:45:09] --- Music queue concluded.
+[20:46:00] --- Playing: vaultboy - everything sucks (Official Music Video)
+[20:46:09] --- Added to queue: Ariana Grande - R.E.M. (Audio)
+[20:46:14] --- Queue was printed as: 
+1: Ariana Grande - R.E.M. (Audio)
+
+[20:46:55] --- Added to queue: Joji - Glimpse of Us (Official Video)
+[20:48:05] --- Playing: Ariana Grande - R.E.M. (Audio)
+[20:48:12] --- Added to queue: Doja Cat - I Don't Do Drugs (Visualizer) ft. Ariana Grande
+[20:48:16] --- Added to queue: Sebastian Ingrosso & Alesso ft. Ryan Tedder -- Calling (Lose My Mind)  [Radio Edit]
+[20:48:16] --- Queue was printed as: 
+1: Joji - Glimpse of Us (Official Video)
+2: Doja Cat - I Don't Do Drugs (Visualizer) ft. Ariana Grande
+3: Sebastian Ingrosso & Alesso ft. Ryan Tedder -- Calling (Lose My Mind)  [Radio Edit]
+
+[20:49:08] --- Removed song number 3: Sebastian Ingrosso & Alesso ft. Ryan Tedder -- Calling (Lose My Mind)  [Radio Edit] from the queue.
+[20:49:14] --- Added to queue: NIKI - Every Summertime (Visualizer)
+[20:49:29] --- Added to queue: Lose My Mind (Radio Edit)
+[20:49:36] --- Queue was printed as: 
+1: Joji - Glimpse of Us (Official Video)
+2: Doja Cat - I Don't Do Drugs (Visualizer) ft. Ariana Grande
+3: NIKI - Every Summertime (Visualizer)
+4: Lose My Mind (Radio Edit)
+
+[20:50:08] --- Added to queue: Paramore: Hard Times [OFFICIAL VIDEO]
+[20:50:34] --- Added to queue: Paramore: Caught In The Middle [OFFICIAL VIDEO]
+[20:50:43] --- Queue was printed as: 
+1: Joji - Glimpse of Us (Official Video)
+2: Doja Cat - I Don't Do Drugs (Visualizer) ft. Ariana Grande
+3: NIKI - Every Summertime (Visualizer)
+4: Lose My Mind (Radio Edit)
+5: Paramore: Hard Times [OFFICIAL VIDEO]
+6: Paramore: Caught In The Middle [OFFICIAL VIDEO]
+
+[20:52:15] --- Playing: Joji - Glimpse of Us (Official Video)
+[20:56:15] --- Playing: Doja Cat - I Don't Do Drugs (Visualizer) ft. Ariana Grande
+[20:56:20] --- Playing: NIKI - Every Summertime (Visualizer)
+[21:00:22] --- Playing: Lose My Mind (Radio Edit)
+[21:03:31] --- Playing: Paramore: Hard Times [OFFICIAL VIDEO]
+[21:03:35] --- Playing: Paramore: Caught In The Middle [OFFICIAL VIDEO]
+[21:07:14] --- Music queue concluded.
+[21:09:57] --- Playing: Bang Bang (From 'Minions: The Rise of Gru' Soundtrack)
+[21:10:47] --- Added to queue: Ravers MashUp - S3RL
+[21:12:20] --- Playing: Ravers MashUp - S3RL
+[21:16:34] --- Music queue concluded.
+[21:34:30] --- Playing: Do I look like a clown to you
+[21:34:44] --- Playing: Ram Ranch 34
+[21:36:12] --- Playing: S3RL - Bass Slut (Original Mix)
+[22:47:56] --- Playing: Skepta - Bellator

@@ -1,0 +1,21 @@
+
+[00:36:58] --- Connected to voice channel.
+[00:37:01] --- Playing: Kanye West - Sounds ft. Juice WRLD and Travis Scott
+[00:38:03] --- Added to queue: ROKSANA WĘGIEL zwyciężyła w kategorii "Debiut roku"
+[00:41:25] --- Playing: ROKSANA WĘGIEL zwyciężyła w kategorii "Debiut roku"
+[00:43:58] --- Music queue concluded.
+[00:44:55] --- Playing: Ski Mask the Slump God - Get Geeked (Official Audio)
+[00:50:12] --- Playing: Mac Miller - Self Care
+[01:09:03] --- Connected to voice channel.
+[01:10:20] --- Playing: Alan Walker x Benjamin Ingrosso - Man On The Moon (Official Music Video)
+[01:10:42] --- Added to queue: Man On The Moon
+[01:10:48] --- Playing: Man On The Moon
+[01:11:06] --- Added to queue: Mac Miller - Diablo (Teaser)
+[01:14:24] --- Playing: Mac Miller - Diablo (Teaser)
+[01:15:25] --- Added to queue: Billie Eilish - lovely (Lyrics) ft. Khalid
+[01:17:53] --- Playing: Billie Eilish - lovely (Lyrics) ft. Khalid
+[01:21:17] --- Music queue concluded.
+[01:21:39] --- Playing: Joji - Like You Do
+[01:22:16] --- Added to queue: Beautiful Boy (Darling Boy)
+[01:25:43] --- Playing: Beautiful Boy (Darling Boy)
+[01:29:47] --- Music queue concluded.

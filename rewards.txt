@@ -1,0 +1,1 @@
+{"Kiss on face cheek": 2000, "Kiss on ass cheek with clothing": 2500, "Kiss on ass cheek no clothing": 8000, "Expired drivers licence": 10000, "Kiss on the lips (In-game)": 800, "Date (Online)": 10000, "Date (In-person, expenses not included)": 15000}

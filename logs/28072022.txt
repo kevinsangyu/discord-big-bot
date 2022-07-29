@@ -1,0 +1,22 @@
+
+[21:20:53] --- Connected to voice channel.
+[21:21:00] --- Playing: Lil Uzi Vert - Glock In My Purse [Official Audio]
+[21:21:36] --- Added to queue: Central Cee - Doja (Directed by Cole Bennett)
+[21:21:44] --- Added to queue: TARTAR CONTROL - "My God's Cock" BRIDGE CITY SESSIONS
+[21:25:05] --- Playing: Central Cee - Doja (Directed by Cole Bennett)
+[21:27:36] --- Playing: TARTAR CONTROL - "My God's Cock" BRIDGE CITY SESSIONS
+[21:28:01] --- Music queue concluded.
+[21:28:47] --- Playing: Dua Lipa - Levitating Featuring DaBaby (Official Music Video)
+[21:28:55] --- Added to queue: God's Cock
+[21:32:44] --- Playing: God's Cock
+[21:35:27] --- Music queue concluded.
+[21:42:07] --- Playing: Man's Got Cock
+[21:46:13] --- Playing: Sleepy Hallow - Die Young (Official Video) ft. 347aidan
+[21:47:52] --- Playing: Kendrick Lamar - Silent Hill ft. Kodak Black (Official Audio)
+[21:50:33] --- Added to queue: Kendrick Lamar - Mirror (Official Audio)
+[21:51:00] --- Added to queue: Tyler, The Creator - JUGGERNAUT (Official Video)
+[21:51:39] --- Playing: Kendrick Lamar - Mirror (Official Audio)
+[21:55:58] --- Playing: Tyler, The Creator - JUGGERNAUT (Official Video)
+[21:57:37] --- Music queue concluded.
+[22:31:53] --- Playing: Juice WRLD - Grace (Unreleased)
+[23:23:41] --- Left voice channel.

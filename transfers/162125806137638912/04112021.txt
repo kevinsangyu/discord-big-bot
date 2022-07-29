@@ -1,0 +1,35 @@
+
+[00:14:51] --- Lisa paid Smeath 65 Wu points
+[11:55:52] --- rita.li2@education.nsw.gov.au's balance: 0
+[11:56:12] --- kevinbaken paid rita.li2@education.nsw.gov.au 50 Wu points
+[12:37:17] --- [Pod]'s balance: 0
+[12:48:25] --- Pi'erre Bourne paid rita.li2@education.nsw.gov.au 1 Wu points
+[13:38:50] --- lee paid lil mac 50 Wu points
+[13:45:50] --- Pi'erre Bourne paid JJ 240 Wu points
+[13:45:56] --- Aquatic Sheep won 25 during a SPR game.
+[13:46:09] --- Aquatic Sheep lost 50 during a SPR game.
+[13:46:17] --- JJ lost 739 during a SPR game.
+[13:46:29] --- Aquatic Sheep lost 50 during a SPR game.
+[13:46:33] --- Aquatic Sheep won 25 during a SPR game.
+[13:46:44] --- JJ's balance: 1
+[13:47:05] --- Aquatic Sheep lost 50 during a SPR game.
+[13:47:08] --- Aquatic Sheep won 25 during a SPR game.
+[13:47:17] --- Aquatic Sheep won 25 during a SPR game.
+[13:47:30] --- lee's balance: 170
+[13:47:34] --- wow its me lost 20 during a SPR game.
+[13:48:10] --- wow its me lost 30 during a SPR game.
+[13:48:54] --- supremeleader lost 260 during a SPR game.
+[13:48:58] --- Aquatic Sheep lost 20 in a dice game.
+[13:49:04] --- Aquatic Sheep lost 20 in a dice game.
+[13:49:06] --- Aquatic Sheep lost 20 in a dice game.
+[13:49:07] --- Aquatic Sheep lost 20 in a dice game.
+[13:49:10] --- Aquatic Sheep lost 20 in a dice game.
+[13:49:12] --- Aquatic Sheep lost 20 in a dice game.
+[13:49:14] --- Aquatic Sheep lost 20 in a dice game.
+[13:49:16] --- Aquatic Sheep won 20 in a dice game.
+[13:49:19] --- lee's balance: 50
+[13:49:52] --- Aquatic Sheep lost 20 in a dice game.
+[13:50:22] --- [Pod]'s balance: 0
+[13:50:41] --- Aquatic Sheep lost 30 in a dice game.
+[13:50:50] --- lee's balance: 0
+[23:03:21] --- minu paid Smeath 100 Wu points

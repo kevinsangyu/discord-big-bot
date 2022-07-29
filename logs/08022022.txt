@@ -1,0 +1,13 @@
+
+[00:02:56] --- Connected to voice channel.
+[00:03:04] --- Playing: Xxxtentacion - Vice City
+[00:11:41] --- Error: Command raised an exception: IndexError: list index out of range
+[00:12:56] --- Playing: Heartbreak High Intro (Season 1) 1994
+[00:13:26] --- Playing: Juice WRLD - Cash Out Ft. G Herbo(Unreleased)
+[00:30:24] --- Playing: Beautiful Boy (Darling Boy)
+[00:34:19] --- Added to queue: Rihanna, Kanye West, Paul McCartney - FourFiveSeconds
+[00:34:28] --- Playing: Rihanna, Kanye West, Paul McCartney - FourFiveSeconds
+[00:34:36] --- Added to queue: Frank's Track
+[00:37:45] --- Playing: Frank's Track
+[00:38:28] --- Music queue concluded.
+[08:13:36] --- Left voice channel.

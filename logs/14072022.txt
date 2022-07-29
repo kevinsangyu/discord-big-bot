@@ -1,0 +1,116 @@
+
+[00:00:06] --- Playing: Halsey - Without Me (Audio) ft. Juice WRLD
+[00:03:59] --- Playing: Maroon 5 - Can't Leave You Alone ft. Juice WRLD (Official Lyric Video)
+[00:04:27] --- Playing: C U Girl
+[00:05:05] --- Queue was printed as: 
+1: Xxxtentacion - Vice City
+2: Juice WRLD - Death Penalty (v2) (Unreleased)
+3: George Michael - Careless Whisper (Official Video)
+4: A Boogie Wit da Hoodie - Girls Go Down [Official Audio]
+5: Juice WRLD - Burn (Official Music Video)
+6: Aries - ONE PUNCH
+
+[00:05:41] --- Added to queue: Joji - Glimpse of Us (Official Video)
+[00:05:48] --- Queue was printed as: 
+1: Xxxtentacion - Vice City
+2: Juice WRLD - Death Penalty (v2) (Unreleased)
+3: George Michael - Careless Whisper (Official Video)
+4: A Boogie Wit da Hoodie - Girls Go Down [Official Audio]
+5: Juice WRLD - Burn (Official Music Video)
+6: Aries - ONE PUNCH
+7: Joji - Glimpse of Us (Official Video)
+
+[00:06:39] --- Playing: Xxxtentacion - Vice City
+[00:10:25] --- Playing: Juice WRLD - Death Penalty (v2) (Unreleased)
+[00:12:42] --- Added to queue: Post Malone - I Like You (Lyrics) ft. Doja Cat
+[00:12:50] --- Queue was printed as: 
+1: George Michael - Careless Whisper (Official Video)
+2: A Boogie Wit da Hoodie - Girls Go Down [Official Audio]
+3: Juice WRLD - Burn (Official Music Video)
+4: Aries - ONE PUNCH
+5: Joji - Glimpse of Us (Official Video)
+6: Post Malone - I Like You (Lyrics) ft. Doja Cat
+
+[00:13:20] --- Added to queue: Ariana Grande - ghostin (Audio)
+[00:13:47] --- Queue was printed as: 
+1: George Michael - Careless Whisper (Official Video)
+2: A Boogie Wit da Hoodie - Girls Go Down [Official Audio]
+3: Juice WRLD - Burn (Official Music Video)
+4: Aries - ONE PUNCH
+5: Joji - Glimpse of Us (Official Video)
+6: Post Malone - I Like You (Lyrics) ft. Doja Cat
+7: Ariana Grande - ghostin (Audio)
+
+[00:14:09] --- Playing: George Michael - Careless Whisper (Official Video)
+[00:15:07] --- Queue was printed as: 
+1: A Boogie Wit da Hoodie - Girls Go Down [Official Audio]
+2: Juice WRLD - Burn (Official Music Video)
+3: Aries - ONE PUNCH
+4: Joji - Glimpse of Us (Official Video)
+5: Post Malone - I Like You (Lyrics) ft. Doja Cat
+6: Ariana Grande - ghostin (Audio)
+
+[00:15:23] --- Added to queue: Ariana Grande - ghostin (Audio)
+[00:15:35] --- Added to queue: Tyler, The Creator - LUMBERJACK (Official Video)
+[00:15:39] --- Queue was printed as: 
+1: A Boogie Wit da Hoodie - Girls Go Down [Official Audio]
+2: Juice WRLD - Burn (Official Music Video)
+3: Aries - ONE PUNCH
+4: Joji - Glimpse of Us (Official Video)
+5: Post Malone - I Like You (Lyrics) ft. Doja Cat
+6: Ariana Grande - ghostin (Audio)
+7: Ariana Grande - ghostin (Audio)
+8: Tyler, The Creator - LUMBERJACK (Official Video)
+
+[00:19:15] --- Playing: A Boogie Wit da Hoodie - Girls Go Down [Official Audio]
+[00:21:57] --- Playing: Juice WRLD - Burn (Official Music Video)
+[00:25:24] --- Playing: Aries - ONE PUNCH
+[00:27:54] --- Playing: Joji - Glimpse of Us (Official Video)
+[00:31:28] --- Playing: Post Malone - I Like You (Lyrics) ft. Doja Cat
+[00:33:50] --- Added to queue: Ariana Grande - Wit It This Christmas (Audio)
+[00:33:52] --- Queue was printed as: 
+1: Ariana Grande - ghostin (Audio)
+2: Ariana Grande - ghostin (Audio)
+3: Tyler, The Creator - LUMBERJACK (Official Video)
+4: Ariana Grande - Wit It This Christmas (Audio)
+
+[00:34:22] --- Playing: Ariana Grande - ghostin (Audio)
+[00:34:27] --- Playing: Ariana Grande - ghostin (Audio)
+[00:35:04] --- Added to queue: Ariana Grande - December (Audio)
+[00:39:04] --- Playing: Tyler, The Creator - LUMBERJACK (Official Video)
+[00:40:30] --- Playing: Ariana Grande - Wit It This Christmas (Audio)
+[00:41:39] --- Queue was printed as: 
+1: Ariana Grande - December (Audio)
+
+[00:42:02] --- Added to queue: Ariana Grande - Not Just On Christmas (Audio)
+[00:43:15] --- Playing: Ariana Grande - December (Audio)
+[00:45:15] --- Playing: Ariana Grande - Not Just On Christmas (Audio)
+[00:47:22] --- Music queue concluded.
+[01:29:57] --- Heads or tails, result: Heads.
+[01:31:18] --- From: Pod
+Said: Heads.
+[01:31:27] --- Heads or tails, result: Tails.
+[01:32:32] --- From: Pod
+Said: peepeepoopoo
+[21:16:42] --- Connected to voice channel.
+[21:16:49] --- Playing: Juice Wrld - Flaws and Sins V2 (unreleased)
+[21:20:40] --- Playing: Juice WRLD - ZOOM | unreleased
+[22:32:01] --- From: Pod
+Said: omfg.
+[22:34:39] --- Connected to voice channel.
+[22:34:42] --- Playing: Doja Cat - I Don't Do Drugs (Visualizer) ft. Ariana Grande
+[22:37:32] --- Added to queue: Doja Cat - Options (Visualizer) ft. JID
+[22:37:54] --- Playing: Doja Cat - Options (Visualizer) ft. JID
+[22:40:37] --- Music queue concluded.
+[22:40:55] --- Playing: Doja Cat - Why Why (Audio) ft. Gunna
+[22:42:58] --- Added to queue: Doja Cat - Payday (Visualizer) ft. Young Thug
+[22:43:59] --- Playing: Doja Cat - Payday (Visualizer) ft. Young Thug
+[22:47:32] --- Music queue concluded.
+[22:48:18] --- Playing: POP SMOKE - DIOR (OFFICIAL VIDEO)
+[22:49:07] --- Playing: Kendrick Lamar - N95 (Official Audio)
+[22:49:55] --- Playing: DripReport - Skechers (Official Music Video) Prod. OUHBOY
+[22:50:13] --- Added to queue: Kendrick Lamar - N95 (Official Audio)
+[22:51:50] --- Playing: Kendrick Lamar - N95 (Official Audio)
+[22:55:07] --- Music queue concluded.
+[23:08:20] --- Connected to voice channel.
+[23:08:23] --- Playing: Juice WRLD - RAIN DANCE (Official Lyric Video)

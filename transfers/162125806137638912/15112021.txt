@@ -1,0 +1,6 @@
+
+[00:01:58] --- [Pod] lost 10 during a SPR game.
+[00:02:04] --- [Pod] lost 20 during a SPR game.
+[00:02:12] --- [Pod] lost 10 during a SPR game.
+[20:14:21] --- bigShrewd won 10 during a SPR game.
+[20:14:39] --- Sank lost 100 during a SPR game.

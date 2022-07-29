@@ -1,0 +1,9 @@
+
+[22:40:55] --- Connected to voice channel.
+[22:40:58] --- Playing: Skepta - Bellator
+[22:45:29] --- Playing: Juice WRLD - GoPro (Label Mix) [Unreleased CDQ]
+[22:46:42] --- Playing: Juice WRLD - GoPro (Unreleased)
+[22:46:56] --- Queue was printed as: 
+There is nothing in your music queue.
+[22:47:10] --- Playing: GO PRO
+[22:50:56] --- Left voice channel.

@@ -1,0 +1,6 @@
+
+[10:31:21] --- Heads or tails, result: Tails.
+[21:34:09] --- Calc called with raw string: 2.99*5
+[21:34:10] --- Calc concluded with answer: 14.950000000000001
+[22:47:01] --- Calc called with raw string: 175/7
+[22:47:01] --- Calc concluded with answer: 25.0

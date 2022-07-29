@@ -1,0 +1,5 @@
+
+[18:27:48] --- Calc called with raw string: 2000/48
+[18:27:49] --- Calc concluded with answer: 41.666666666666664
+[18:27:53] --- Calc called with raw string: 48*42
+[18:27:54] --- Calc concluded with answer: 2016.0

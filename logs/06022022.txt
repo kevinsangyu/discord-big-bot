@@ -1,0 +1,3 @@
+
+[00:03:20] --- Heads or tails, result: Heads.
+[00:03:43] --- Heads or tails, result: Tails.

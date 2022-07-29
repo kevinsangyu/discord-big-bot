@@ -1,0 +1,6 @@
+
+[22:27:37] --- Aquatic Sheep's balance: 0
+[22:48:45] --- Lisa paid Lisa 1351 Wu points
+[22:49:40] --- Lisa's balance was deducted by 2702, their balance is now 0 Wu points
+[22:50:47] --- Lisa paid Aquatic Sheep 2240 Wu points
+[22:54:52] --- Lisa paid maxi 2 Wu points

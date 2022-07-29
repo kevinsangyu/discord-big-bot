@@ -1,0 +1,87 @@
+
+[00:55:13] --- Warning: Pod#6968
+[00:56:08] --- From: Pod
+Said: bazinga
+[01:03:54] --- Warning: Aquatic Sheep#3469
+[22:53:20] --- Connected to voice channel.
+[22:53:28] --- Playing: Juice WRLD - ZOOM | unreleased
+[22:57:28] --- Playing: Juice Wrld - Omen/Overseer (CDQ Remaster) (Unreleased)
+[22:57:53] --- Playing: Juice WRLD - Potions (Unreleased)
+[22:57:56] --- Added to queue: Bang Bang (From 'Minions: The Rise of Gru' Soundtrack)
+[22:58:04] --- Queue was printed as: 
+1: Bang Bang (From 'Minions: The Rise of Gru' Soundtrack)
+
+[23:01:29] --- Playing: Bang Bang (From 'Minions: The Rise of Gru' Soundtrack)
+[23:01:32] --- Music queue concluded.
+[23:11:19] --- Playing: Juice WRLD - Omen / Overseer (Full CDQ Leak)
+[23:22:19] --- Playing: Juice WRLD "Moonlight" (Official Audio)
+[23:22:27] --- Added to queue: La La Land - Full OST / Soundtrack (HQ)
+[23:25:24] --- Playing: La La Land - Full OST / Soundtrack (HQ)
+[23:26:37] --- Music queue concluded.
+[23:26:59] --- Playing: Drake - Toosie Slide (Official Music Video)
+[23:27:14] --- Added to queue: Aries - RIDING
+[23:27:19] --- Queue was printed as: 
+1: Aries - RIDING
+
+[23:28:35] --- Playing: Aries - RIDING
+[23:31:43] --- Music queue concluded.
+[23:31:43] --- Playing: Juice WRLD- Red Moonlight (lyric video)
+[23:37:32] --- Playing: Bang Bang (From 'Minions: The Rise of Gru' Soundtrack)
+[23:37:45] --- Added to queue: Yeat - Rich Minion (Lyrics)
+[23:39:54] --- Playing: Yeat - Rich Minion (Lyrics)
+[23:42:42] --- Music queue concluded.
+[23:43:12] --- Playing: XXXTENTACION - Edge Of The Earth (feat. Kid Cudi) (NEW SNIPPET)
+[23:45:30] --- Playing: Michael Jackson - Rock With You (Official Video)
+[23:47:34] --- Added to queue: midwxst - i know you hate me (Official Video)
+[23:47:42] --- Added to queue: Yeat & Lil Uzi Vert - Big tonka (prod. Aunix, Leqn & Brandon Finessin) [2 Alive: Geek Pack]
+[23:48:13] --- Added to queue: Juice WRLD - Sometimes (Official Visualizer)
+[23:48:34] --- Added to queue: Your Voice / Bethel, NY (Official Visualizer)
+[23:49:00] --- Playing: midwxst - i know you hate me (Official Video)
+[23:49:00] --- Error: Command raised an exception: ClientException: Already playing audio.
+[23:49:14] --- Added to queue: Halsey - Without Me (Audio) ft. Juice WRLD
+[23:49:18] --- Queue was printed as: 
+1: Yeat & Lil Uzi Vert - Big tonka (prod. Aunix, Leqn & Brandon Finessin) [2 Alive: Geek Pack]
+2: Juice WRLD - Sometimes (Official Visualizer)
+3: Your Voice / Bethel, NY (Official Visualizer)
+4: Halsey - Without Me (Audio) ft. Juice WRLD
+
+[23:49:28] --- Added to queue: Maroon 5 - Can't Leave You Alone ft. Juice WRLD (Official Lyric Video)
+[23:50:12] --- Added to queue: C U Girl
+[23:50:31] --- Added to queue: Xxxtentacion - Vice City
+[23:51:08] --- Playing: Yeat & Lil Uzi Vert - Big tonka (prod. Aunix, Leqn & Brandon Finessin) [2 Alive: Geek Pack]
+[23:51:10] --- Queue was printed as: 
+1: Juice WRLD - Sometimes (Official Visualizer)
+2: Your Voice / Bethel, NY (Official Visualizer)
+3: Halsey - Without Me (Audio) ft. Juice WRLD
+4: Maroon 5 - Can't Leave You Alone ft. Juice WRLD (Official Lyric Video)
+5: C U Girl
+6: Xxxtentacion - Vice City
+
+[23:51:45] --- Added to queue: Juice WRLD - Death Penalty (v2) (Unreleased)
+[23:52:29] --- Added to queue: George Michael - Careless Whisper (Official Video)
+[23:52:56] --- Added to queue: A Boogie Wit da Hoodie - Girls Go Down [Official Audio]
+[23:53:17] --- Added to queue: Juice WRLD - Burn (Official Music Video)
+[23:53:50] --- Playing: Juice WRLD - Sometimes (Official Visualizer)
+[23:57:20] --- Queue was printed as: 
+1: Your Voice / Bethel, NY (Official Visualizer)
+2: Halsey - Without Me (Audio) ft. Juice WRLD
+3: Maroon 5 - Can't Leave You Alone ft. Juice WRLD (Official Lyric Video)
+4: C U Girl
+5: Xxxtentacion - Vice City
+6: Juice WRLD - Death Penalty (v2) (Unreleased)
+7: George Michael - Careless Whisper (Official Video)
+8: A Boogie Wit da Hoodie - Girls Go Down [Official Audio]
+9: Juice WRLD - Burn (Official Music Video)
+
+[23:57:27] --- Playing: Your Voice / Bethel, NY (Official Visualizer)
+[23:57:44] --- Added to queue: Aries - ONE PUNCH
+[23:59:54] --- Queue was printed as: 
+1: Halsey - Without Me (Audio) ft. Juice WRLD
+2: Maroon 5 - Can't Leave You Alone ft. Juice WRLD (Official Lyric Video)
+3: C U Girl
+4: Xxxtentacion - Vice City
+5: Juice WRLD - Death Penalty (v2) (Unreleased)
+6: George Michael - Careless Whisper (Official Video)
+7: A Boogie Wit da Hoodie - Girls Go Down [Official Audio]
+8: Juice WRLD - Burn (Official Music Video)
+9: Aries - ONE PUNCH

@@ -1,0 +1,3 @@
+
+[20:01:02] --- kevinbaken paid lee 20 Wu points
+[20:01:15] --- kevinbaken's balance was deducted by 20, their balance is now 558 Wu points
