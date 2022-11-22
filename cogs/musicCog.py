@@ -123,8 +123,8 @@ class MusicCog(commands.Cog):
                 with youtube_dl.YoutubeDL(self.YDL_OPTIONS) as ydl:
                     info = ydl.extract_info(url, download=False)
                     url2 = info['formats'][0]['url']
-                    # source = await discord.FFmpegOpusAudio.from_probe(url2, **self.FFMPEG_OPTIONS)
-                    source = await discord.FFmpegOpusAudio.from_probe(url2, **self.FFMPEG_OPTIONS, executable=self.botkeys['ffmpegPATH'])
+                    source = await discord.FFmpegOpusAudio.from_probe(url2, **self.FFMPEG_OPTIONS)
+                    # source = await discord.FFmpegOpusAudio.from_probe(url2, **self.FFMPEG_OPTIONS, executable=self.botkeys['ffmpegPATH'])
                     self.current[ctx.guild.id] = song
                     await ctx.send(f"Now playing {song.name}.")
                     vc.play(source)

@@ -187,7 +187,7 @@ class MoneyCog(commands.Cog):
             return
         if ctx.author.id != self.botkeys["Lucasid"] and ctx.author.id != self.botkeys["Kevinid"] \
                 and ctx.author.id != self.botkeys["Bigbotid"]:
-            if check_balance(ctx.guild, ctx.author) - amount < 0:
+            if check_balance(ctx.guild.id, ctx.author.id) - amount < 0:
                 await ctx.send("You have insufficient Wu points.")
                 return
             bankdict[str(ctx.author.id)]["balance"] -= amount
