@@ -1,2 +1,21 @@
 
 [13:35:12] --- Bank initialised for this server.
+[15:57:07] --- sÑeath's balance: 50
+[15:57:16] --- sÑeath's balance was deducted by 50, their balance is now 0 Wu points
+[15:57:28] --- kevinbaken paid sÑeath 5921 Wu points
+[15:57:42] --- kevinbaken paid Lee 4590 Wu points
+[15:57:48] --- Lee's balance was deducted by 50, their balance is now 4590 Wu points
+[15:57:54] --- Lisa paid em11y 1700 Wu points
+[15:58:17] --- kevinbaken paid Samael 2806 Wu points
+[15:58:27] --- kevinbaken paid Alex 2804 Wu points
+[15:58:36] --- kevinbaken paid Sank 2796 Wu points
+[15:58:44] --- Sank's balance was deducted by 50, their balance is now 2796 Wu points
+[15:59:00] --- kevinbaken paid maxi 2773 Wu points
+[15:59:16] --- kevinbaken paid kevinbaken 2527 Wu points
+[15:59:38] --- kevinbaken paid NoblemanWich 2050 Wu points
+[15:59:47] --- kevinbaken paid Harry 2050 Wu points
+[15:59:52] --- Harry's balance was deducted by 50, their balance is now 2050 Wu points
+[16:02:27] --- Sank's balance: 2796
+[16:40:25] --- kevinbaken paid Samael 50 Wu points
+[16:40:31] --- Samael's balance was deducted by 50, their balance is now 2856 Wu points
+[16:59:06] --- Dame Judi Dench paid Samael 50 Wu points
