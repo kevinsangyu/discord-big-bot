@@ -1,2 +1,0 @@
-
-[21:28:19] --- A real fact was printed.

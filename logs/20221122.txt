@@ -1,0 +1,6 @@
+
+[13:27:52] --- Big Bot is online.
+[13:28:08] --- Scissors paper rock called with: p
+[13:28:23] --- Connected to voice channel.
+[13:28:30] --- Error: Command raised an exception: PermissionError: [WinError 5] Access is denied
+[13:28:35] --- Left voice channel.

@@ -1,8 +1,0 @@
-
-[00:43:40] --- Smeath paid JJ 50 Wu points
-[00:43:45] --- JJ paid JJ 50 Wu points
-[00:46:12] --- JJ paid Smeath 100 Wu points
-[21:35:45] --- JJ paid Smeath 1 Wu points
-[21:35:55] --- Anna Wintour paid JJ 50 Wu points
-[21:39:10] --- Smeath paid JJ 50 Wu points
-[21:44:06] --- JJ paid Smeath 100 Wu points

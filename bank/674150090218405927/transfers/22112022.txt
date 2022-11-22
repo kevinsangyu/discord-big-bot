@@ -1,0 +1,12 @@
+
+[13:10:11] --- biggershrewd's balance: 0
+[13:11:04] --- kevim paid biggershrewd 20 Wu points
+[13:11:12] --- biggershrewd's balance: 20
+[13:11:19] --- kevim's balance was deducted by 20, their balance is now 30 Wu points
+[13:19:00] --- kevim won 5 during a SPR game.
+[13:19:32] --- kevim won 5 during a SPR game.
+[13:19:38] --- kevim won 5 during a SPR game.
+[13:19:50] --- kevim lost 10 during a SPR game.
+[13:19:55] --- kevim won 5 during a SPR game.
+[13:25:04] --- kevim lost 10 during a SPR game.
+[13:25:10] --- kevim lost 10 during a SPR game.

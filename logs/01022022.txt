@@ -1,9 +1,0 @@
-
-[11:47:51] --- Calc called with raw string: 500+200+200+200+15-
-[11:47:51] --- Error: Command raised an exception: IndexError: list index out of range
-[11:47:58] --- Calc called with raw string: 500+200+200+200+150
-[11:47:58] --- Calc concluded with answer: 1250.0
-[14:37:00] --- Calc called with raw string: 1699*0.11
-[14:37:01] --- Calc concluded with answer: 186.89000000000001
-[14:37:12] --- Calc called with raw string: 1699-(1699*0.11)
-[14:37:12] --- Calc concluded with answer: 1512.11

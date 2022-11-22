@@ -1,4 +1,0 @@
-
-[13:59:26] --- Heads or tails, result: Tails.
-[14:11:35] --- Heads or tails, result: Tails.
-[14:24:22] --- Heads or tails, result: Heads.

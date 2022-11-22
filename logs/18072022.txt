@@ -1,4 +1,0 @@
-
-[10:19:07] --- Error: Command raised an exception: AttributeError: 'NoneType' object has no attribute 'is_playing'
-[23:26:06] --- Calc called with raw string: 107.15/5
-[23:26:06] --- Calc concluded with answer: 21.43

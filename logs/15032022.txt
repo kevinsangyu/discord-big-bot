@@ -1,3 +1,0 @@
-
-[13:47:37] --- Calc called with raw string: how many bitches does heath get
-[13:47:37] --- Error: Command raised an exception: IndexError: list index out of range

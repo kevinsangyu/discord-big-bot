@@ -1,2 +1,0 @@
-
-[21:37:36] --- Poll called with prompt: Ava or Liv, and options: ['1⃣ Ava\n', '2⃣ Liv\n']

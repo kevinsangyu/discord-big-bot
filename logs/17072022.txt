@@ -1,5 +1,0 @@
-
-[20:15:27] --- Connected to voice channel.
-[20:16:03] --- Error: Command raised an exception: IndexError: list index out of range
-[20:20:02] --- Error: Command raised an exception: IndexError: list index out of range
-[20:20:27] --- Playing: G.E.M. - Bang Bang (Audio) [From Minions: The Rise of Gru]

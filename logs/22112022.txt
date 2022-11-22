@@ -1,0 +1,28 @@
+
+[13:05:12] --- Big Bot is online.
+[13:05:17] --- Ping command, with latency:218
+[13:05:21] --- Error: Command raised an exception: TypeError: string indices must be integers
+[13:08:20] --- Big Bot is online.
+[13:08:23] --- Error: Command raised an exception: TypeError: string indices must be integers
+[13:09:06] --- Big Bot is online.
+[13:09:10] --- Error: Command raised an exception: JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+[13:10:46] --- Big Bot is online.
+[13:13:32] --- Big Bot is online.
+[13:13:37] --- Error: Command raised an exception: KeyError: 160297704998567936
+[13:16:33] --- Big Bot is online.
+[13:16:34] --- Error: Command raised an exception: KeyError: 160297704998567936
+[13:18:20] --- Big Bot is online.
+[13:18:22] --- Error: Command raised an exception: KeyError: 160297704998567936
+[13:18:58] --- Big Bot is online.
+[13:18:59] --- Scissors paper rock called with: p
+[13:19:28] --- Big Bot is online.
+[13:19:32] --- Scissors paper rock called with: p
+[13:19:37] --- Scissors paper rock called with: p
+[13:19:41] --- Scissors paper rock called with: p
+[13:19:46] --- Scissors paper rock called with: p
+[13:19:50] --- Scissors paper rock called with: p
+[13:19:52] --- Scissors paper rock called with: p
+[13:19:55] --- Scissors paper rock called with: p
+[13:25:03] --- Scissors paper rock called with: p
+[13:25:09] --- Scissors paper rock called with: p
+[13:26:57] --- Big Bot is online.

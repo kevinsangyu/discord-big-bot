@@ -1,6 +1,0 @@
-
-[21:18:46] --- Poll called with prompt: this is a test, and options: ['1⃣ option 1\n', '2⃣ option2\n', '3⃣ option 3\n']
-[21:19:21] --- Poll called with prompt: leave work group chat cause my batch is annoying as fuck, and options: ['1⃣ yes\n', '2⃣ no\n']
-[21:32:46] --- Big Bot is online.
-[21:47:15] --- Big Bot is online.
-[21:47:30] --- Error: Command raised an exception: ZeroDivisionError: float division by zero

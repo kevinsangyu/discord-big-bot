@@ -1,7 +1,0 @@
-
-[23:29:05] --- Connected to voice channel.
-[23:29:12] --- Playing: Pyramids
-[23:31:07] --- Error: Unexpected quote mark, '’', in non-quoted string
-[23:31:32] --- Added to queue: Man's Got Cock
-[23:39:11] --- Playing: Man's Got Cock
-[23:41:49] --- Music queue concluded.

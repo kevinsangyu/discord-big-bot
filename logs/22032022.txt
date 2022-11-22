@@ -1,2 +1,0 @@
-
-[14:33:21] --- Heads or tails, result: Tails.

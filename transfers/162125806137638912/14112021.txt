@@ -1,4 +1,0 @@
-
-[00:10:48] --- Salary was paid to everyone registered.
-[17:28:03] --- Alex's balance: 302
-[17:28:36] --- Lisa paid Alex 302 Wu points

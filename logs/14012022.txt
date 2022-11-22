@@ -1,7 +1,0 @@
-
-[20:50:00] --- Big Bot is online.
-[20:50:01] --- Error: Command raised an exception: UnicodeDecodeError: 'utf-8' codec can't decode byte 0x97 in position 2587: invalid start byte
-[20:54:16] --- Big Bot is online.
-[20:54:22] --- Error: Command raised an exception: UnicodeDecodeError: 'utf-8' codec can't decode byte 0x97 in position 2587: invalid start byte
-[20:58:05] --- Big Bot is online.
-[20:58:06] --- A real fact was printed.

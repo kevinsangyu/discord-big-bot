@@ -1,3 +1,0 @@
-
-[19:25:21] --- Calc called with raw string: 6*1600
-[19:25:22] --- Calc concluded with answer: 9600.0

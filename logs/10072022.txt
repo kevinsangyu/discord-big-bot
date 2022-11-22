@@ -1,5 +1,0 @@
-
-[17:24:51] --- Calc called with raw string: 650/31
-[17:24:51] --- Calc concluded with answer: 20.967741935483872
-[23:23:43] --- Connected to voice channel.
-[23:23:47] --- Playing: Bromance (Official Music Video)

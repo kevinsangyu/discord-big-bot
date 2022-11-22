@@ -1,5 +1,0 @@
-
-[19:08:54] --- Ping command, with latency:205
-[19:14:35] --- Heads or tails, result: Heads.
-[19:29:09] --- Connected to voice channel.
-[19:29:25] --- Left voice channel.

@@ -1,3 +1,0 @@
-
-[19:19:54] --- Calc called with raw string: 21 + 100 - 211 + 11 - 90 + 1
-[19:19:54] --- Calc concluded with answer: -192.0

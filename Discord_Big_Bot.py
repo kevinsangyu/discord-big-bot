@@ -1,12 +1,8 @@
+import asyncio
 import random
 from datetime import *
 import discord
 from discord.ext import commands
-import musicCog
-import wikiCog
-import moneyCog
-import translateCog
-import mathCog
 import os
 import Botkeys
 
@@ -20,13 +16,21 @@ try:
 except FileExistsError:
     pass
 
-intents = discord.Intents.default()
+intents = discord.Intents.all()
 intents.members = True
 client = commands.Bot(command_prefix='Kevin ', intents=intents)
-cogs = [musicCog, wikiCog, moneyCog, translateCog, mathCog]
-for cog in cogs:
-    cog.setup(client)
 botkeys = Botkeys.get_keys()
+
+
+async def load():
+    for filename in os.listdir("./cogs"):
+        if filename.endswith(".py"):
+            await client.load_extension(f'cogs.{filename[:-3]}')
+
+
+async def main():
+    await load()
+    await client.start(botkeys["BotToken"])
 
 
 def time():
@@ -37,7 +41,7 @@ def time():
 def logger(message):
     os.chdir("logs")
     today = date.today()
-    logfile = open(today.strftime("%d%m%Y") + ".txt", 'a', encoding='utf-8')
+    logfile = open(today.strftime("%Y%m%d") + ".txt", 'a', encoding='utf-8')
     logfile.write("\n" + time() + message)
     logfile.close()
     os.chdir("..")
@@ -264,4 +268,4 @@ async def randomss(ctx, amount: int = 1):
     await ctx.send(result)
 
 
-client.run(botkeys["BotToken"])
+asyncio.run(main())

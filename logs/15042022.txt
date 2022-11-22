@@ -1,3 +1,0 @@
-
-[14:50:50] --- Big Bot is online.
-[14:50:56] --- Heads or tails, result: Heads.
