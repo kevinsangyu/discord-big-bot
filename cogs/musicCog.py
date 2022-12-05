@@ -80,7 +80,7 @@ class MusicCog(commands.Cog):
     @commands.command(description="Play a video's audio from provided youtube link. If something is already playing,"
                                   "it will be queued.")
     @commands.cooldown(1, 3)
-    async def play(self, ctx, *url): # link no longer work for some reason
+    async def play(self, ctx, *url):
         url = " ".join(url)
         if url[0:38] == "https://www.youtube.com/playlist?list=":
             await self.playlist(ctx, url)
@@ -115,8 +115,8 @@ class MusicCog(commands.Cog):
                 else:
                     self.music_queue[ctx.guild.id].append(song)
                 await ctx.send(
-                    f"Queued as number {str(len(self.music_queue[ctx.guild.id]))} in queue.\nType `Kevin queue` to"
-                    f" see your queue.")
+                    f"Queued {song.name} as number {str(len(self.music_queue[ctx.guild.id]))} in queue.\nType `Kevin "
+                    f"queue` to see your queue.")
                 logger("Added to queue: " + song.name)
             else:
                 vc = ctx.voice_client
@@ -124,7 +124,6 @@ class MusicCog(commands.Cog):
                     info = ydl.extract_info(url, download=False)
                     url2 = info['formats'][0]['url']
                     source = await discord.FFmpegOpusAudio.from_probe(url2, **self.FFMPEG_OPTIONS)
-                    # source = await discord.FFmpegOpusAudio.from_probe(url2, **self.FFMPEG_OPTIONS, executable=self.botkeys['ffmpegPATH'])
                     self.current[ctx.guild.id] = song
                     await ctx.send(f"Now playing {song.name}.")
                     vc.play(source)
@@ -146,7 +145,6 @@ class MusicCog(commands.Cog):
                             info = ydl.extract_info(song.url, download=False)
                             url2 = info['formats'][0]['url']
                             source = await discord.FFmpegOpusAudio.from_probe(url2, **self.FFMPEG_OPTIONS)
-                            # source = await discord.FFmpegOpusAudio.from_probe(url2, **self.FFMPEG_OPTIONS, executable=self.botkeys['ffmpegPATH'])
                             try:
                                 vc.play(source)
                             except discord.errors.ClientException:
@@ -176,7 +174,6 @@ class MusicCog(commands.Cog):
                         info = ydl.extract_info(song.url, download=False)
                         url2 = info['formats'][0]['url']
                         source = await discord.FFmpegOpusAudio.from_probe(url2, **self.FFMPEG_OPTIONS)
-                        # source = await discord.FFmpegOpusAudio.from_probe(url2, **self.FFMPEG_OPTIONS, executable=self.botkeys['ffmpegPATH'])
                         try:
                             vc.play(source)
                         except discord.errors.ClientException:
@@ -283,6 +280,20 @@ class MusicCog(commands.Cog):
                 msg = "Removed song number " + str(index) + ": " + song.name + " from the queue."
             await ctx.send(msg)
             logger(msg)
+
+    @commands.command(description="Pushes a song to the start of the queue.")
+    async def push(self, ctx, index):
+        try:
+            index = int(index)
+        except ValueError:
+            await ctx.send("Invalid index: given index was not a number.")
+            return
+        if len(self.music_queue[ctx.guild.id]) < abs(index) or index == 0:
+            await ctx.send("Invalid index, the music queue is not that big or given index was 0.")
+            return
+        song = self.music_queue[ctx.guild.id].pop(index-1)
+        self.music_queue[ctx.guild.id].insert(0, song)
+        await ctx.send(f"{song.name} was pushed to the start of the queue.")
 
     @commands.command(description="Shuffles the queue.")
     async def shuffle(self, ctx):
