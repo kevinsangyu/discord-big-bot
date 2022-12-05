@@ -221,13 +221,14 @@ class MoneyCog(commands.Cog):
         transaction_logger(ctx.guild.id, f"{user.display_name}'s balance was deducted by {amount}, their balance is now"
                                          f" {bankdict[str(user.id)]['balance']} Wu points")
 
-    @tasks.loop(hours=1)
-    async def salary(self):  # at the moment it gives everyone in every guild a weekly salary of 50
+    @tasks.loop(hours=1)  # @tasks.loop(hours=1)
+    async def salary(self):
         now = datetime.now()
         if now.strftime("%w%H") == "000":
-            for guild_id in self.client.guilds:
+            for guild_id in [guild.id async for guild in self.client.fetch_guilds()]:
                 bankdict = get_bank(guild_id)
                 if bankdict is None:
+                    print("No bank was found for guild: " + str(guild_id))
                     continue
                 else:
                     for member in bankdict.keys():
