@@ -48,21 +48,21 @@ def sequential_calc(equation):
                     for k in range(opener + 1, closer + 1):
                         equation.pop(opener + 1)
                     equation[opener] = sequential_calc(newlist)
-            elif "*" in equation: # order of operations is not correct
-                index = equation.index("*")
-                equation[index - 1] = float(equation[index - 1]) * float(equation[index + 1])
-                del equation[index:index + 2]
             elif "/" in equation:
                 index = equation.index("/")
                 equation[index - 1] = float(equation[index - 1]) / float(equation[index + 1])
                 del equation[index:index + 2]
-            elif "+" in equation:
-                index = equation.index("+")
-                equation[index - 1] = float(equation[index - 1]) + float(equation[index + 1])
+            elif "*" in equation:
+                index = equation.index("*")
+                equation[index - 1] = float(equation[index - 1]) * float(equation[index + 1])
                 del equation[index:index + 2]
             elif "-" in equation:
                 index = equation.index("-")
                 equation[index - 1] = float(equation[index - 1]) - float(equation[index + 1])
+                del equation[index:index + 2]
+            elif "+" in equation:
+                index = equation.index("+")
+                equation[index - 1] = float(equation[index - 1]) + float(equation[index + 1])
                 del equation[index:index + 2]
         return str(equation[0])
 
