@@ -1,1 +1,1 @@
-{"160297704998567936": {"balance": 20, "salary-claimed": false}, "805883352141266954": {"balance": 20, "salary-claimed": false}}
+{"160297704998567936": {"balance": 70, "salary-claimed": true}, "805883352141266954": {"balance": 20, "salary-claimed": false}}
