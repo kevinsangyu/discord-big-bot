@@ -252,7 +252,8 @@ class MoneyCog(commands.Cog):
             save_bank(ctx.guild.id, bankdict)
             await ctx.send(f"Salary has been claimed. Your balance is now {bankdict[str(ctx.author.id)]['balance']}.")
         else:
-            await ctx.send("You have already claimed your salary. Salary claims reset every sunday night.")
+            await ctx.send("You have already claimed your salary. Salary claims reset every Saturday midnight ("
+                           "Technically sunday).")
 
     @commands.command(aliases=['leader', 'lb'], description="Shows the rankings of the first 10 "
                                                             "users with the most Wu points.")
