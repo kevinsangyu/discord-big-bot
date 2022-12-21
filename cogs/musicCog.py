@@ -18,6 +18,7 @@ def logger(message):
     today = date.today()
     logfile = open(today.strftime("%Y%m%d") + ".txt", 'a', encoding='utf-8')
     logfile.write("\n" + time() + message)
+    print(time() + message)
     logfile.close()
     os.chdir("..")
 
@@ -35,14 +36,14 @@ class MusicCog(commands.Cog):
         self.music_queue = {}
         self.music_channel = {}
         self.current = {}
-        self.check.start()
+        # self.check.start()
         self.FFMPEG_OPTIONS = {'before_options': ' -reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5',
                                'options': '-vn'}
         self.YDL_OPTIONS = {'format': 'bestaudio'}
         self.youtube = build('youtube', 'v3', developerKey=self.botkeys["Youtube"])
 
-    def cog_unload(self):
-        self.check.cancel()
+    # def cog_unload(self):
+        # self.check.cancel()
 
     @commands.command(aliases=['connect', 'cum'], description="The bot joins the voice channel of the sender.")
     async def join(self, ctx):
@@ -82,17 +83,27 @@ class MusicCog(commands.Cog):
     @commands.cooldown(1, 3)
     async def play(self, ctx, *url):
         url = " ".join(url)
-        if url[0:38] == "https://www.youtube.com/playlist?list=":
+        if url.startswith("https://www.youtube.com/playlist?list="):
             await self.playlist(ctx, url)
             return
         self.music_channel[ctx.guild.id] = ctx.channel
         if ctx.voice_client is None:
             await self.join(ctx)
-        if url[0:31] == "https://www.youtube.com/watch?v=":
+        if url.startswith("https://www.youtube.com/watch?v="):
             if '&' in url:
                 url = url[:url.find("&")]
-        elif url[0:20] == "https://www.youtu.be/":
-            url = "https://www.youtube.com/watch?v=" + url[21:]
+            if '?list' in url:
+                url = url[:url.find("?list")]
+        elif url.startswith("https://youtu.be/"):
+            if '&' in url:
+                url = url[:url.find("&")]
+            if '?list' in url:
+                url = url[:url.find("?list")]
+            url = "https://www.youtube.com/watch?v=" + url[17:]
+        elif url.startswith("https://soundcloud.com/"):
+            name = youtube_dl.YoutubeDL(self.YDL_OPTIONS).extract_info(url, download=False)['title']
+            # this is horribly inefficient. Need a quicker more efficient way to grab the website/song title.
+            song = Song(name, url)
         else:
             request = self.youtube.search().list(
                 part="id",
@@ -101,13 +112,14 @@ class MusicCog(commands.Cog):
             )
             response = request.execute()
             url = "https://www.youtube.com/watch?v=" + response['items'][0]['id']['videoId']
-        request = self.youtube.videos().list(
-            part='snippet',
-            id=url[32:]
-        )
-        response = request.execute()
-        name = response['items'][0]['snippet']['title']
-        song = Song(name, url)
+        if not url.startswith("https://soundcloud.com/"):
+            request = self.youtube.videos().list(
+                part='snippet',
+                id=url[32:]
+            )
+            response = request.execute()
+            name = response['items'][0]['snippet']['title']
+            song = Song(name, url)
         async with ctx.typing():
             if ctx.voice_client.is_playing() or ctx.voice_client.is_paused():
                 if ctx.guild.id not in self.music_queue:
@@ -123,37 +135,36 @@ class MusicCog(commands.Cog):
                 with youtube_dl.YoutubeDL(self.YDL_OPTIONS) as ydl:
                     info = ydl.extract_info(url, download=False)
                     url2 = info['formats'][0]['url']
-                    source = await discord.FFmpegOpusAudio.from_probe(url2, **self.FFMPEG_OPTIONS)
                     self.current[ctx.guild.id] = song
                     await ctx.send(f"Now playing {song.name}.")
-                    vc.play(source)
+                    vc.play(
+                        discord.PCMVolumeTransformer(
+                            discord.FFmpegPCMAudio(url2, **self.FFMPEG_OPTIONS), volume=0.1
+                        ), after=lambda e: self.play_next(ctx))
                     logger("Playing: " + song.name)
 
-    @tasks.loop(seconds=5.0)
-    async def check(self):
-        for vc in self.client.voice_clients:
-            if vc.is_playing() is False and vc.is_paused() is False:
-                if vc.guild.id in self.music_queue:
-                    if not self.music_queue[vc.guild.id]:
-                        self.music_queue.pop(vc.guild.id)
-                        self.current[vc.guild.id] = None
-                        await self.music_channel[vc.guild.id].send("Music queue concluded.")
-                        logger("Music queue concluded.")
-                    else:
-                        song = self.music_queue[vc.guild.id].pop(0)
-                        with youtube_dl.YoutubeDL(self.YDL_OPTIONS) as ydl:
-                            info = ydl.extract_info(song.url, download=False)
-                            url2 = info['formats'][0]['url']
-                            source = await discord.FFmpegOpusAudio.from_probe(url2, **self.FFMPEG_OPTIONS)
-                            try:
-                                vc.play(source)
-                            except discord.errors.ClientException:
-                                self.music_queue[vc.guild.id].insert(0, song)
-                                print("Already skipping, skip check cancelled.")
-                                return
-                            self.current[vc.guild.id] = song
-                            await self.music_channel[vc.guild.id].send(f"Now playing {song.name}")
-                            logger("Playing: " + song.name)
+    def play_next(self, ctx):
+        logger("Song concluded/skipped: " + self.current[ctx.guild.id].name)
+        if ctx.guild.id in self.music_queue:
+            if len(self.music_queue[ctx.guild.id]) < 1:
+                self.client.loop.create_task(self.music_channel[ctx.guild.id].send("Music queue concluded."))
+                # unfortunately the loop.create_task function is quite random at times, sometimes taking up to 3 seconds
+                # to send the actual message.
+                logger("Music queue concluded.")
+                self.current[ctx.guild.id] = None
+            else:
+                song = self.music_queue[ctx.guild.id].pop(0)
+                vc = ctx.voice_client
+                with youtube_dl.YoutubeDL(self.YDL_OPTIONS) as ydl:
+                    info = ydl.extract_info(song.url, download=False)
+                    url2 = info['formats'][0]['url']
+                    vc.play(
+                        discord.PCMVolumeTransformer(
+                            discord.FFmpegPCMAudio(url2, **self.FFMPEG_OPTIONS), volume=0.1
+                        ), after=lambda e: self.play_next(ctx))
+                    self.current[vc.guild.id] = song
+                    self.client.loop.create_task(self.music_channel[ctx.guild.id].send(f"Now playing {song.name}"))
+                    logger("Playing: " + song.name)
 
     @commands.command(aliases=['s'], description="Skips to the next song in the queue.")
     async def skip(self, ctx):
@@ -162,27 +173,8 @@ class MusicCog(commands.Cog):
             await ctx.send("I must be connected to a voice channel first.")
         else:
             vc.stop()
-            if ctx.guild.id in self.music_queue:
-                if not self.music_queue[vc.guild.id]:
-                    self.music_queue.pop(vc.guild.id)
-                    self.current[vc.guild.id] = None
-                    await self.music_channel[vc.guild.id].send("Music queue concluded.")
-                    logger("Music queue concluded.")
-                else:
-                    song = self.music_queue[ctx.guild.id].pop(0)
-                    with youtube_dl.YoutubeDL(self.YDL_OPTIONS) as ydl:
-                        info = ydl.extract_info(song.url, download=False)
-                        url2 = info['formats'][0]['url']
-                        source = await discord.FFmpegOpusAudio.from_probe(url2, **self.FFMPEG_OPTIONS)
-                        try:
-                            vc.play(source)
-                        except discord.errors.ClientException:
-                            self.music_queue[vc.guild.id].insert(0, song)
-                            print("Already skipping, skip cancelled.")
-                            return
-                        self.current[ctx.guild.id] = song
-                        await ctx.send(f"Now playing {song.name}.")
-                        logger("Playing: " + song.name)
+        # this will call the after function from the play function, which will move onto the next in the queue or
+        # conclude it anyway
 
     @commands.command(aliases=['st'], description="Skips to the specified song in the queue. Removes all songs before"
                                                   " said song form the queue.")
