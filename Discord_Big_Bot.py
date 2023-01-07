@@ -47,6 +47,23 @@ def logger(message):
     os.chdir("..")
 
 
+class Buttons(discord.ui.View):
+    def __init__(self, timeout=1800):
+        super().__init__(timeout=timeout)
+
+    @discord.ui.button(label="Redo", custom_id="teamsRedoButton", style=discord.ButtonStyle.blurple, emoji="🔄")
+    async def teams_redo_button(self, interaction: discord.Interaction, button: discord.ui.Button):
+        lines = interaction.message.content.split("\n")
+        team_num = len(lines)
+        members = []
+        for line in lines:
+            line = line[line.find(":")+2:]
+            for entry in line.split():
+                members.append(entry)
+        await interaction.message.edit(view=None)
+        await interaction.response.send_message(content=teams_comm(team_num, " ".join(members)), view=self)
+
+
 @client.event
 async def on_ready():
     await client.change_presence(activity=discord.Activity(name="'Kevin help' for help.", type=3))
@@ -176,34 +193,33 @@ async def paint(ctx, *, memberlist):
     logger(logstr)
 
 
-@client.command(aliases=['team', 'split', 'Team', 'Teams', 'Split'],
-                description="Splits given people into given number of teams. Separate names with only a single space.")
-async def teams(ctx, amount, *, memberlist):
-    logger("Teams: String received: " + memberlist)
-    members = memberlist.split(" ")
-    result = []
+def teams_comm(amount, members):
+    logger("Teams: String received: " + members)
+    results = []
     amount = int(amount)
-    logger("Splitting people into teams, with members: " + str(members))
+    members = members.split(" ")
     i = 0
     while i < amount:
-        result.append("")
+        results.append("")
         i += 1
     while members:
-        for x in range(0, amount):
-            choice = random.choice(members)
-            result[x] += choice + " "
-            i = 0
-            while i < len(members):
-                if choice == members[i]:
-                    del members[i]
-                i += 1
+        for i in range(0, amount):
+            results[i] += members.pop(random.randint(0, len(members)-1)) + " "
             if not members:
                 break
     logstr = "\n               ------Results------"
-    for x in range(0, len(result)):
-        await ctx.send("Team number " + str(x + 1) + ": " + result[x])
-        logstr += "\n               " + "Team number " + str(x + 1) + ": " + result[x]
+    msg = ""
+    for x in range(0, len(results)):
+        msg += "Team number " + str(x + 1) + ": " + results[x] + "\n"
+        logstr += "\n               " + "Team number " + str(x + 1) + ": " + results[x]
     logger(logstr)
+    return msg
+
+
+@client.command(aliases=['team', 'split', 'Team', 'Teams', 'Split'],
+                description="Splits given people into given number of teams. Separate names with only a single space.")
+async def teams(ctx, amount, *, memberlist):
+    await ctx.send(teams_comm(amount, memberlist), view=Buttons())
 
 
 @client.command(aliases=['pick'], description="Chooses an item in a given set of items. Separate names with a single"
