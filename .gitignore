@@ -4,3 +4,4 @@
 /cogs/__pycache__/*.*
 /logs/*.*
 /bank/*/transfers/*.*
+/guildData/*
