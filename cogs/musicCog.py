@@ -1,7 +1,7 @@
 import random
 import discord
 from discord.ext import tasks, commands
-import youtube_dl
+import yt_dlp as youtube_dl
 from datetime import *
 from googleapiclient.discovery import build
 import os
@@ -134,7 +134,7 @@ class MusicCog(commands.Cog):
                 vc = ctx.voice_client
                 with youtube_dl.YoutubeDL(self.YDL_OPTIONS) as ydl:
                     info = ydl.extract_info(url, download=False)
-                    url2 = info['formats'][0]['url']
+                    url2 = info['url']
                     self.current[ctx.guild.id] = song
                     await ctx.send(f"Now playing {song.name}.")
                     vc.play(
@@ -157,7 +157,7 @@ class MusicCog(commands.Cog):
                 vc = ctx.voice_client
                 with youtube_dl.YoutubeDL(self.YDL_OPTIONS) as ydl:
                     info = ydl.extract_info(song.url, download=False)
-                    url2 = info['formats'][0]['url']
+                    url2 = info['url']
                     vc.play(
                         discord.PCMVolumeTransformer(
                             discord.FFmpegPCMAudio(url2, **self.FFMPEG_OPTIONS), volume=0.1
