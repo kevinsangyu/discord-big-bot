@@ -39,7 +39,7 @@ class MusicCog(commands.Cog):
         # self.check.start()
         self.FFMPEG_OPTIONS = {'before_options': ' -reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5',
                                'options': '-vn'}
-        self.YDL_OPTIONS = {'format': 'bestaudio'}
+        self.YDL_OPTIONS = {'format': 'bestaudio', 'username': 'oauth2', 'password': ''}
         self.youtube = build('youtube', 'v3', developerKey=self.botkeys["Youtube"])
 
     # def cog_unload(self):
